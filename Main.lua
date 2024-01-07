@@ -58,6 +58,13 @@ ButtonFrame.Parent = ScreenGui
 ButtonFrame.Size = UDim2.new(0.1,0,0.1,0)
 ButtonFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
 ButtonFrame.AnchorPoint = Vector2.new(0.5,0.5)
+ButtonFrame.Text = "Menu"
+ButtonFrame.BorderSizePixel = 0
+ButtonFrame.BackgroundColor3 = Color3.new(0.537255, 0.270588, 1)
+ButtonFrame.Position = UDim2.new(0.1,0,0.1,0)
+
+local MainButtonUICorner = Instance.new("UICorner")
+MainButtonUICorner.Parent = ButtonFrame
 
 local gui = ButtonFrame
 
@@ -97,7 +104,73 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
+function CheckBlacklisting(Name)
+
+	for i,v in pairs(BlackList) do
+
+		if Name == v then
+
+			return false
+
+		end
+
+	end
+
+	return true
+
+end
+
+local MenuFrame = Instance.new("Frame")
+MenuFrame.Name = "Menu"
+MenuFrame.Visible = false
+MenuFrame.Size = UDim2.new(0.7,0,0.8,0)
+MenuFrame.Parent = ScreenGui
+MenuFrame.Position = UDim2.new(0.5,0,0.5,0)
+MenuFrame.AnchorPoint = Vector2.new(0.5,0.5)
+
+local TopBar = Instance.new("Frame")
+TopBar.Position = UDim2.new(0.5,0,0,0)
+TopBar.Size = UDim2.new(1,0,0.05,0)
+TopBar.Parent = MenuFrame
+TopBar.AnchorPoint = Vector2.new(0.5,0)
+TopBar.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
+
+local ReduceButton = Instance.new("TextButton")
+ReduceButton.Parent = TopBar
+ReduceButton.Text = "-"
+ReduceButton.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
+ReduceButton.Size = UDim2.new(0.05,0,1,0)
+
+local RemoveButton = Instance.new("TextButton")
+RemoveButton.Parent = TopBar
+RemoveButton.Text = "X"
+RemoveButton.BackgroundColor3 = Color3.new(1, 0, 0.0156863)
+RemoveButton.TextColor3 = Color3.new(1, 1, 1)
+RemoveButton.Size = UDim2.new(0.05,0,1,0)
+RemoveButton.Position = UDim2.new(0.05,0,0,0)
+
+local GetWorkspace = Instance.new("TextButton")
+GetWorkspace.Parent = MenuFrame
+GetWorkspace.Position = UDim2.new(0.025,0,0.1,0)
+GetWorkspace.Name = "GetWorkspace"
+GetWorkspace.BackgroundColor3 = Color3.new(0.298039, 0.14902, 0.14902)
+GetWorkspace.Text = "Get Workspace"
+GetWorkspace.Size = UDim2.new(0.2,0,0.05,0)
+GetWorkspace.TextColor3 = Color3.new(1, 1, 1)
+
+ReduceButton.MouseButton1Click:Connect(function()
+	MenuFrame.Visible = false
+end)
+
+RemoveButton.MouseButton1Click:Connect(function()
+	ScreenGui:Destroy()
+end)
+
 ButtonFrame.MouseButton1Click:Connect(function()
+	MenuFrame.Visible = not MenuFrame.Visible
+end)
+
+GetWorkspace.MouseButton1Click:Connect(function()
 
 	for i,v in pairs(workspace:GetChildren()) do
 
@@ -116,34 +189,4 @@ ButtonFrame.MouseButton1Click:Connect(function()
 		end
 
 	end
-
-	local FireWorkFolder = workspace.FireworkSpawns
-	for i,v in pairs(FireWorkFolder.Firework1:GetChildren())do
-		print(v.Name.."=>"..v.ClassName)
-	end
-
-	local Firework = FireWorkFolder.Firework5
-	print(Firework.Main.Position)
-	character.PrimaryPart.CFrame = Firework.FireworkModel.CFrame
-	--workspace.ChildAdded:Connect(function(NewChild)
-	--print(NewChild.Name)
-	--print(NewChild.Parent.Name)
-	--end)
 end)
-
-function CheckBlacklisting(Name)
-
-	for i,v in pairs(BlackList) do
-
-		if Name == v then
-
-			return false
-
-		end
-
-	end
-
-	return true
-
-end
-
