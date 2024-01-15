@@ -1,47 +1,3 @@
-local BlackList = {
-	"Folder",
-	"FlagFolder",
-	"ModelCache",
-	"RenderingRoom",
-	"reppedModels",
-	"Vehicles",
-	"Props",
-	"Characters",
-	"MouseFilter",
-	"Tycoons",
-	"DestructionDisplayModels",
-	"AIs",
-	"TycoonModels",
-	"Flares",
-	"XMAS",
-	"WaterColliders",
-	"SewerPipes",
-	"Sewer",
-	"RiverAssets",
-	"PlacedTycoon",
-	"PlacedTycoons",
-	"Dogs",
-	"Parts",
-	"Paths",
-	"OldMapSize",
-	"ParkingLot",
-	"WaterEffect",
-	"EliteMissions",
-	"TerrainCursorPart",
-	"SafeZones",
-	"B29Spawns",
-	"DeathmatchArena",
-	"AdPlacements",
-	"ControlPoints",
-	"DockAddition",
-	"Fireworks",
-	"BuildingStuff",
-	"Borders",
-	"AAVStages",
-	"Event",
-	"EliteMission1",
-	"Zombies"}
-
 local Selection = game
 
 local Player = game.Players.LocalPlayer
@@ -180,22 +136,6 @@ function CreateTextButton(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	return Button
 end
 
-function CheckBlacklisting(Name)
-
-	for i,v in pairs(BlackList) do
-
-		if Name == v then
-
-			return false
-
-		end
-
-	end
-
-	return true
-
-end
-
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -232,8 +172,9 @@ end)
 -- Button Functions
 
 --GetWorkspace
-GetGameFilesButton.MouseButton1Click:Connect(function()
-	BrowserFrame.Visible = true
+function Refresh()
+	BrowserInnerFrame.CanvasPosition = Vector2.new(0,0)
+	
 	for i,v in pairs(BrowserInnerFrame:GetChildren()) do
 		if v:IsA("TextButton")then
 			v:Destroy()
@@ -244,7 +185,12 @@ GetGameFilesButton.MouseButton1Click:Connect(function()
 	ReturnButton.Parent = BrowserInnerFrame
 	
 	ReturnButton.MouseButton1Click:Connect(function()
-		Selection = Selection.Parent
+		if Selection ~= game then 
+			Selection = Selection.Parent
+			Refresh()
+		else
+			BrowserFrame.Visible = false
+		end
 	end)
 	
 	for i,v in pairs(Selection:GetChildren())do
@@ -254,8 +200,12 @@ GetGameFilesButton.MouseButton1Click:Connect(function()
 		Button.MouseButton1Click:Connect(function()
 			Button.BackgroundColor3 = Color3.new(0.67451, 0.67451, 0.67451)
 			Selection = v
+			Refresh()
 		end)
 	end
-	
-	
+end
+
+GetGameFilesButton.MouseButton1Click:Connect(function()
+	BrowserFrame.Visible = true
+	Refresh()
 end)
