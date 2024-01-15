@@ -42,6 +42,8 @@ local BlackList = {
 	"EliteMission1",
 	"Zombies"}
 
+local Selection = game
+
 local Player = game.Players.LocalPlayer
 local character = Player.Character
 local humanoid = character:WaitForChild("Humanoid")
@@ -104,6 +106,80 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
+function CreateFrame(x,y,xsize,ysize, Name)
+	local Frame = Instance.new("Frame")
+	Frame.Name = Name
+	Frame.Visible = true
+	Frame.Size = UDim2.new(xsize,0,ysize,0)
+	Frame.Parent = ScreenGui
+	Frame.Position = UDim2.new(x,0,y,0)
+	Frame.AnchorPoint = Vector2.new(0.5,0.5)
+	
+	return Frame
+end
+
+function CreateScrollingFrame(x,y,xsize,ysize, Name)
+	local Frame = Instance.new("ScrollingFrame")
+	Frame.Name = Name
+	Frame.Visible = true
+	Frame.Size = UDim2.new(xsize,0,ysize,0)
+	Frame.Parent = ScreenGui
+	Frame.Position = UDim2.new(x,0,y,0)
+	Frame.AnchorPoint = Vector2.new(0.5,0.5)
+	Frame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	
+	return Frame
+end
+
+function CreateTabFrame(x,y,xsize,ysize, Name)
+	local Frame = Instance.new("Frame")
+	Frame.Name = Name
+	Frame.Visible = false
+	Frame.Size = UDim2.new(xsize,0,ysize,0)
+	Frame.Parent = ScreenGui
+	Frame.Position = UDim2.new(x,0,y,0)
+	Frame.AnchorPoint = Vector2.new(0.5,0.5)
+
+	local TopBar = Instance.new("Frame")
+	TopBar.Position = UDim2.new(0.5,0,0,0)
+	TopBar.Size = UDim2.new(1,0,0.05,0)
+	TopBar.Name = "TopBar"
+	TopBar.Parent = Frame
+	TopBar.AnchorPoint = Vector2.new(0.5,0)
+	TopBar.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
+
+	local ReduceButton = Instance.new("TextButton")
+	ReduceButton.Parent = TopBar
+	ReduceButton.Text = "-"
+	ReduceButton.Name = "ReduceButton"
+	ReduceButton.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
+	ReduceButton.Size = UDim2.new(0.05,0,1,0)
+
+	local RemoveButton = Instance.new("TextButton")
+	RemoveButton.Parent = TopBar
+	RemoveButton.Text = "X"
+	RemoveButton.Name = "RemoveButton"
+	RemoveButton.BackgroundColor3 = Color3.new(1, 0, 0.0156863)
+	RemoveButton.TextColor3 = Color3.new(1, 1, 1)
+	RemoveButton.Size = UDim2.new(0.05,0,1,0)
+	RemoveButton.Position = UDim2.new(0.05,0,0,0)
+	
+	return Frame
+end
+
+function CreateTextButton(x,y,xsize,ysize,name,text,backgroundColor,textColor)
+	local Button = Instance.new("TextButton")
+	Button.Name = name
+	Button.Text = text
+	Button.Position = UDim2.new(x,0,y,0)
+	Button.Size = UDim2.new(xsize,0,ysize,0)
+	Button.AnchorPoint = Vector2.new(0.5,0.5)
+	Button.TextColor3 = textColor
+	Button.BackgroundColor3 = backgroundColor
+	Button.TextScaled = true
+	return Button
+end
+
 function CheckBlacklisting(Name)
 
 	for i,v in pairs(BlackList) do
@@ -120,73 +196,66 @@ function CheckBlacklisting(Name)
 
 end
 
-local MenuFrame = Instance.new("Frame")
-MenuFrame.Name = "Menu"
-MenuFrame.Visible = false
-MenuFrame.Size = UDim2.new(0.7,0,0.8,0)
+local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
-MenuFrame.Position = UDim2.new(0.5,0,0.5,0)
-MenuFrame.AnchorPoint = Vector2.new(0.5,0.5)
+local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
 
-local TopBar = Instance.new("Frame")
-TopBar.Position = UDim2.new(0.5,0,0,0)
-TopBar.Size = UDim2.new(1,0,0.05,0)
-TopBar.Parent = MenuFrame
-TopBar.AnchorPoint = Vector2.new(0.5,0)
-TopBar.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
+BrowserFrame.Parent = ScreenGui
+BrowserFrame.TopBar:WaitForChild("RemoveButton"):Destroy()
 
-local ReduceButton = Instance.new("TextButton")
-ReduceButton.Parent = TopBar
-ReduceButton.Text = "-"
-ReduceButton.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
-ReduceButton.Size = UDim2.new(0.05,0,1,0)
+local BrowserInnerFrame = CreateScrollingFrame(0.5,0.55, 1,0.9,"BrowserInnerFrame")
+BrowserInnerFrame.Parent = BrowserFrame
 
-local RemoveButton = Instance.new("TextButton")
-RemoveButton.Parent = TopBar
-RemoveButton.Text = "X"
-RemoveButton.BackgroundColor3 = Color3.new(1, 0, 0.0156863)
-RemoveButton.TextColor3 = Color3.new(1, 1, 1)
-RemoveButton.Size = UDim2.new(0.05,0,1,0)
-RemoveButton.Position = UDim2.new(0.05,0,0,0)
+local GetGameFilesButton = CreateTextButton(0.06,0.15,0.1,0.075,"GetGameFilesButton", "Get game files",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+GetGameFilesButton.Parent = MenuFrame
 
-local GetWorkspace = Instance.new("TextButton")
-GetWorkspace.Parent = MenuFrame
-GetWorkspace.Position = UDim2.new(0.025,0,0.1,0)
-GetWorkspace.Name = "GetWorkspace"
-GetWorkspace.BackgroundColor3 = Color3.new(0.298039, 0.14902, 0.14902)
-GetWorkspace.Text = "Get Workspace"
-GetWorkspace.Size = UDim2.new(0.2,0,0.05,0)
-GetWorkspace.TextColor3 = Color3.new(1, 1, 1)
+local BrowserUIList = Instance.new("UIListLayout")
+BrowserUIList.Parent = BrowserInnerFrame
+BrowserUIList.FillDirection = Enum.FillDirection.Vertical
 
-ReduceButton.MouseButton1Click:Connect(function()
+MenuFrame.TopBar.ReduceButton.MouseButton1Click:Connect(function()
 	MenuFrame.Visible = false
 end)
 
-RemoveButton.MouseButton1Click:Connect(function()
+MenuFrame.TopBar.RemoveButton.MouseButton1Click:Connect(function()
 	ScreenGui:Destroy()
+end)
+
+BrowserFrame.TopBar.ReduceButton.MouseButton1Click:Connect(function()
+	BrowserFrame.Visible = false
 end)
 
 ButtonFrame.MouseButton1Click:Connect(function()
 	MenuFrame.Visible = not MenuFrame.Visible
 end)
 
-GetWorkspace.MouseButton1Click:Connect(function()
+-- Button Functions
 
-	for i,v in pairs(workspace:GetChildren()) do
-
-		local BlackListed = CheckBlacklisting(v.Name)
-
-		if v:IsA("Folder") and BlackListed then
-
-			print(v.Name)
-
-			for a,b in pairs(v:GetChildren())do
-
-				print(v.Name.." > ".. b.Name.." => "..b.ClassName)
-
-			end
-
+--GetWorkspace
+GetGameFilesButton.MouseButton1Click:Connect(function()
+	BrowserFrame.Visible = true
+	for i,v in pairs(BrowserInnerFrame:GetChildren()) do
+		if v:IsA("TextButton")then
+			v:Destroy()
 		end
-
 	end
+
+	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"AAReturn","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
+	ReturnButton.Parent = BrowserInnerFrame
+	
+	ReturnButton.MouseButton1Click:Connect(function()
+		Selection = Selection.Parent
+	end)
+	
+	for i,v in pairs(Selection:GetChildren())do
+		local Button = CreateTextButton(0,0,0.9,0.1,v.Name,v.Name.. " => "..v.ClassName,Color3.new(1, 1, 1),Color3.new(0, 0, 0))
+		Button.Parent = BrowserInnerFrame
+		
+		Button.MouseButton1Click:Connect(function()
+			Button.BackgroundColor3 = Color3.new(0.67451, 0.67451, 0.67451)
+			Selection = v
+		end)
+	end
+	
+	
 end)
