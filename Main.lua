@@ -1,6 +1,7 @@
 local Selection = game
 
 local Player = game.Players.LocalPlayer
+
 local character = Player.Character
 local humanoid = character:WaitForChild("Humanoid")
 
@@ -136,6 +137,19 @@ function CreateTextButton(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	return Button
 end
 
+function CreateTextLabel(x,y,xsize,ysize,name,text,backgroundColor,textColor)
+	local Button = Instance.new("TextLabel")
+	Button.Name = name
+	Button.Text = text
+	Button.Position = UDim2.new(x,0,y,0)
+	Button.Size = UDim2.new(xsize,0,ysize,0)
+	Button.AnchorPoint = Vector2.new(0.5,0.5)
+	Button.TextColor3 = textColor
+	Button.BackgroundColor3 = backgroundColor
+	Button.TextScaled = true
+	return Button
+end
+
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -180,8 +194,8 @@ function Refresh()
 			v:Destroy()
 		end
 	end
-
-	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"AAReturn","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
+	
+	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"1Return","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
 	ReturnButton.Parent = BrowserInnerFrame
 	
 	ReturnButton.MouseButton1Click:Connect(function()
@@ -192,6 +206,11 @@ function Refresh()
 			BrowserFrame.Visible = false
 		end
 	end)
+	
+	
+	if Selection:IsA("ObjectValue") or Selection:IsA("IntValue") or Selection:IsA("StringValue") then
+		local ValueFrame = CreateTextLabel(0,0,0.9,0.1,"2Value","Value: "..Selection.Value,Color3.new(0, 0.235294, 1),Color3.new(1, 1, 1))
+	end
 	
 	for i,v in pairs(Selection:GetChildren())do
 		local Button = CreateTextButton(0,0,0.9,0.1,v.Name,v.Name.. " => "..v.ClassName,Color3.new(1, 1, 1),Color3.new(0, 0, 0))
