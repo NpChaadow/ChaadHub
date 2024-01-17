@@ -190,7 +190,7 @@ function Refresh()
 	BrowserInnerFrame.CanvasPosition = Vector2.new(0,0)
 	
 	for i,v in pairs(BrowserInnerFrame:GetChildren()) do
-		if v:IsA("TextButton")then
+		if v:IsA("TextButton") or v:IsA("TextLabel") then
 			v:Destroy()
 		end
 	end
@@ -210,6 +210,7 @@ function Refresh()
 	
 	if Selection:IsA("ObjectValue") or Selection:IsA("IntValue") or Selection:IsA("StringValue") then
 		local ValueFrame = CreateTextLabel(0,0,0.9,0.1,"2Value","Value: "..Selection.Value,Color3.new(0, 0.235294, 1),Color3.new(1, 1, 1))
+		ValueFrame.Parent = BrowserInnerFrame
 	end
 	
 	for i,v in pairs(Selection:GetChildren())do
