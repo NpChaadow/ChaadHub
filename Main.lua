@@ -159,7 +159,10 @@ local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
 BrowserFrame.Parent = ScreenGui
 BrowserFrame.TopBar:WaitForChild("RemoveButton"):Destroy()
 
-local BrowserInnerFrame = CreateScrollingFrame(0.5,0.55, 1,0.9,"BrowserInnerFrame")
+local BrowserBrowsingLabel = CreateTextLabel(0.5,0.09,1,0.075, "3BrowserBrowsingLabel", "Game", Color3.new(0.67451, 0.67451, 0.67451), Color3.new(0, 0, 0))
+BrowserBrowsingLabel.Parent = BrowserFrame
+
+local BrowserInnerFrame = CreateScrollingFrame(0.5,0.55, 1,0.85,"BrowserInnerFrame")
 BrowserInnerFrame.Parent = BrowserFrame
 
 local GetGameFilesButton = CreateTextButton(0.06,0.15,0.1,0.075,"GetGameFilesButton", "Get game files",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
@@ -190,6 +193,8 @@ end)
 --GetWorkspace
 function Refresh()
 	BrowserInnerFrame.CanvasPosition = Vector2.new(0,0)
+	
+	BrowserBrowsingLabel.Text = Selection.Name
 	
 	for i,v in pairs(BrowserInnerFrame:GetChildren()) do
 		if v:IsA("TextButton") or v:IsA("TextLabel") then
@@ -233,6 +238,19 @@ GetGameFilesButton.MouseButton1Click:Connect(function()
 end)
 
 Mouse.Button1Up:Connect(function()
+	
+	if Mouse.Target.Parent == nil then
+		return
+	end
+	
+	if BrowserFrame.Visible == true then
+		return
+	end
+	
+	if MenuFrame.Visible == true then
+		return
+	end
+	
 	Selection = Mouse.Target.Parent
 	
 	BrowserFrame.Visible = true
