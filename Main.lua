@@ -29,6 +29,9 @@ MainButtonUICorner.Parent = ButtonFrame
 
 local gui = ButtonFrame
 
+local AutoBuy = false
+local ClickResearsh = false
+
 local dragging
 local dragInput
 local dragStart
@@ -168,6 +171,12 @@ BrowserInnerFrame.Parent = BrowserFrame
 local GetGameFilesButton = CreateTextButton(0.06,0.15,0.1,0.075,"GetGameFilesButton", "Get game files",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 GetGameFilesButton.Parent = MenuFrame
 
+local ClickResearchButton = CreateTextButton(0.06,0.25,0.1,0.075,"ClickResearchButton", "Click to research",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+ClickResearchButton.Parent = MenuFrame
+
+local AutoBuyButton = CreateTextButton(0.20,0.25,0.1,0.075,"AutoBuyButton", "Auto Buy",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoBuyButton.Parent = MenuFrame
+
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
 BrowserUIList.FillDirection = Enum.FillDirection.Vertical
@@ -237,6 +246,36 @@ GetGameFilesButton.MouseButton1Click:Connect(function()
 	Refresh()
 end)
 
+--Click To Reseach Button
+
+ClickResearchButton.MouseButton1Click:Connect(function()
+	ClickResearsh = not ClickResearsh
+	if ClickResearsh then
+		ClickResearchButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		ClickResearchButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+end)
+
+--AutoBuy
+
+AutoBuyButton.MouseButton1Click:Connect(function()
+	AutoBuy = not AutoBuy
+	if AutoBuy then
+		AutoBuyButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoBuyButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+	
+	while AutoBuy do
+		wait(1)
+		print("Tp To Button")
+	end
+	
+end)
+
+-- Misc
+
 Mouse.Button1Up:Connect(function()
 	
 	if Mouse.Target.Parent == nil then
@@ -248,6 +287,10 @@ Mouse.Button1Up:Connect(function()
 	end
 	
 	if MenuFrame.Visible == true then
+		return
+	end
+	
+	if ClickResearsh == false then
 		return
 	end
 	
