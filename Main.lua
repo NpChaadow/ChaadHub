@@ -32,6 +32,9 @@ local gui = ButtonFrame
 local AutoBuy = false
 local ClickResearsh = false
 
+local PlayerTycoons = game.Workspace.PlayerTycoons
+local PlayerTycoon = nil
+
 local dragging
 local dragInput
 local dragStart
@@ -260,6 +263,16 @@ end)
 --AutoBuy
 
 AutoBuyButton.MouseButton1Click:Connect(function()
+	
+	if PlayerTycoon == nil then
+		for i,v in pairs(PlayerTycoons:GetChildren()) do
+			if v.TycoonVals.Owner.Value == Player then
+				PlayerTycoon = v
+				print(v)
+			end
+		end
+	end
+	
 	AutoBuy = not AutoBuy
 	if AutoBuy then
 		AutoBuyButton.BackgroundColor3 = Color3.new(0, 1, 0)
@@ -269,7 +282,9 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	
 	while AutoBuy do
 		wait(1)
-		print("Tp To Button")
+		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
+			print(v.Button.Color)
+		end
 	end
 	
 end)
