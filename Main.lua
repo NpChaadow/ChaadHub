@@ -232,7 +232,7 @@ GetGameFilesButton.MouseButton1Click:Connect(function()
 	Refresh()
 end)
 
-Mouse.Button1Down:Connect(function()
+Mouse.Button1Up:Connect(function()
 	Selection = Mouse.Target.Parent
 	
 	BrowserFrame.Visible = true
