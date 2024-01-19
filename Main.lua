@@ -5,6 +5,8 @@ local Player = game.Players.LocalPlayer
 local character = Player.Character
 local humanoid = character:WaitForChild("Humanoid")
 
+local Mouse = Player:GetMouse()
+
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
 local UserInputService = game:GetService("UserInputService")
@@ -228,4 +230,8 @@ end
 GetGameFilesButton.MouseButton1Click:Connect(function()
 	BrowserFrame.Visible = true
 	Refresh()
+end)
+
+Mouse.Button1Down:Connect(function()
+	print(Mouse.Target)
 end)
