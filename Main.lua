@@ -1,3 +1,11 @@
+local ButtonsBlacklist = {
+	"AttackHusky",
+	"AutoCollect",
+	"DoubleCash",
+	"RailgunBattery1",
+	"SuperSoldier"
+}
+
 local Selection = game
 
 local Player = game.Players.LocalPlayer
@@ -158,6 +166,15 @@ function CreateTextLabel(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	return Button
 end
 
+function IsPartOfTable(Table, Check)
+	for i,v in pairs(Table)do
+		if v == Check then
+			return true
+		end
+	end
+	return false
+end
+
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -268,7 +285,6 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoons:GetChildren()) do
 			if v.TycoonVals.Owner.Value == Player then
 				PlayerTycoon = v
-				print(v)
 			end
 		end
 	end
@@ -281,11 +297,19 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	end
 	
 	while AutoBuy do
-		wait(1)
+		wait(0.5)
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
-			if v.Button.Color.G > v.Button.Color.R and v.Button.Color.G > v.Button.Color.B then
+			
+			if IsPartOfTable(ButtonsBlacklist,v.Name) then
+				
+				character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
+				wait(0.2)
+				
+			else
 				character:MoveTo(v.Button.Position)
+				wait(0.2)
 			end
+			
 		end
 	end
 	
