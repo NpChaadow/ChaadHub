@@ -283,10 +283,8 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	while AutoBuy do
 		wait(1)
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
-			print(v.Button.Color)
-			if v.Button.Color == Color3.new(0.223529,0.65098,0.156863) then
-				character:MoveTo(v.Button.Position)
-			end
+			print(v)
+			character:MoveTo(v.Button.Position)
 		end
 	end
 	
