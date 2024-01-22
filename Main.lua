@@ -39,6 +39,8 @@ local gui = ButtonFrame
 
 local AutoBuy = false
 local ClickResearsh = false
+local AutoCollect = false
+local AutoRebirth = false
 
 local PlayerTycoons = game.Workspace.PlayerTycoons
 local PlayerTycoon = nil
@@ -197,6 +199,12 @@ ClickResearchButton.Parent = MenuFrame
 local AutoBuyButton = CreateTextButton(0.20,0.25,0.1,0.075,"AutoBuyButton", "Auto Buy",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoBuyButton.Parent = MenuFrame
 
+local AutoCollectButton = CreateTextButton(0.20,0.15,0.1,0.075,"AutoCollectButton", "Auto Collect",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoCollectButton.Parent = MenuFrame
+
+local AutoRebirthButton = CreateTextButton(0.36,0.15,0.1,0.075,"AutoRebirthButton", "Auto Rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoRebirthButton.Parent = MenuFrame
+
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
 BrowserUIList.FillDirection = Enum.FillDirection.Vertical
@@ -297,22 +305,68 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	end
 	
 	while AutoBuy do
-		wait(0.5)
+		wait(.5)
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
-			
-			if IsPartOfTable(ButtonsBlacklist,v.Name) then
+			wait(1)
+			if IsPartOfTable(ButtonsBlacklist,v.Name) or v.Button.Color.R > v.Button.Color.G then
 				
 				character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
-				wait(0.2)
 				
 			else
 				character:MoveTo(v.Button.Position)
-				wait(0.2)
 			end
 			
 		end
 	end
 	
+end)
+
+--Auto Collect
+
+AutoCollectButton.MouseButton1Click:Connect(function()
+
+	if PlayerTycoon == nil then
+		for i,v in pairs(PlayerTycoons:GetChildren()) do
+			if v.TycoonVals.Owner.Value == Player then
+				PlayerTycoon = v
+			end
+		end
+	end
+
+	AutoCollect = not AutoCollect
+	if AutoCollect then
+		AutoCollectButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoCollectButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+
+	while AutoCollect do
+		wait(2)
+
+		character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position + Vector3.new(0,2,0))
+
+
+	end
+
+end)
+
+-- Auto Rebirth
+
+AutoRebirthButton.MouseButton1Click:Connect(function()
+
+	AutoRebirth = not AutoRebirth
+	if AutoRebirth then
+		AutoRebirthButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoRebirthButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+
+	while AutoRebirth do
+		
+		game:GetService("ReplicatedStorage").LocalRebirth:FireServer()
+		wait(10)
+		
+	end
 end)
 
 -- Misc
@@ -340,3 +394,4 @@ Mouse.Button1Up:Connect(function()
 	BrowserFrame.Visible = true
 	Refresh()
 end)
+
