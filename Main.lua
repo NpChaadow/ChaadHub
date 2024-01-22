@@ -1,3 +1,5 @@
+local VirtualUser = game:GetService("VirtualUser")
+
 local ButtonsBlacklist = {
 	"AttackHusky",
 	"AutoCollect",
@@ -5,6 +7,8 @@ local ButtonsBlacklist = {
 	"RailgunBattery1",
 	"SuperSoldier"
 }
+
+
 
 local Selection = game
 
@@ -41,6 +45,7 @@ local AutoBuy = false
 local ClickResearsh = false
 local AutoCollect = false
 local AutoRebirth = false
+local AntiAfk = false
 
 local PlayerTycoons = game.Workspace.PlayerTycoons
 local PlayerTycoon = nil
@@ -202,8 +207,11 @@ AutoBuyButton.Parent = MenuFrame
 local AutoCollectButton = CreateTextButton(0.20,0.15,0.1,0.075,"AutoCollectButton", "Auto Collect",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoCollectButton.Parent = MenuFrame
 
-local AutoRebirthButton = CreateTextButton(0.36,0.15,0.1,0.075,"AutoRebirthButton", "Auto Rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoRebirthButton = CreateTextButton(0.35,0.15,0.1,0.075,"AutoRebirthButton", "Auto Rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoRebirthButton.Parent = MenuFrame
+
+local AntiAfkButton = CreateTextButton(0.35,.25,0.1,0.075,"AntiAfkButton", "Anti-Afk",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AntiAfkButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
@@ -394,4 +402,3 @@ Mouse.Button1Up:Connect(function()
 	BrowserFrame.Visible = true
 	Refresh()
 end)
-
