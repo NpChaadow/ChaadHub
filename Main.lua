@@ -362,9 +362,9 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 				local Waypoints = ComputePath(character.PrimaryPart.Position,v.Button.Position)
 
 				if Waypoints ~= false then
-					for i,v in pairs(Waypoints) do
+					for i,U in pairs(Waypoints) do
 						if (character.PrimaryPart.Position-v.Button.Position).Magnitude > 500 then
-							character:MoveTo(v.Position)
+							character:MoveTo(U.Position)
 							wait(0.02)
 						else
 							character:MoveTo(v.Button.Position)
