@@ -335,7 +335,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(1)
 			if IsPartOfTable(ButtonsBlacklist,v.Name) or v.Button.Color.R > v.Button.Color.G then
-				local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.PlayerTycoon.Essentials.Giver.CollectButton.Position)
+				local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
 
 				if Waypoints ~= false then
 					for i,v in pairs(Waypoints) do
