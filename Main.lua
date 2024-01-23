@@ -90,7 +90,7 @@ end)
 
 function ComputePath(StartingPoint:Vector3, EndingPoint:Vector3)
 	local Path = PathFindingService:CreatePath({
-		WaypointSpacing	 = 16
+		WaypointSpacing	 = 32
 	})
 	
 	local success, errorMessage = pcall(function()
