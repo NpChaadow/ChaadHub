@@ -89,7 +89,9 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 function ComputePath(StartingPoint:Vector3, EndingPoint:Vector3)
-	local Path = PathFindingService:CreatePath()
+	local Path = PathFindingService:CreatePath({
+		WaypointSpacing	 = 16
+	})
 	
 	local success, errorMessage = pcall(function()
 		Path:ComputeAsync(StartingPoint, EndingPoint)
@@ -341,7 +343,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					for i,v in pairs(Waypoints) do
 
 						character:MoveTo(v.Position)
-						wait(0.02)
+						wait(0.1)
 
 					end
 				end
