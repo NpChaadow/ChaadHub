@@ -1,4 +1,6 @@
 local VirtualUser = game:GetService("VirtualUser")
+local PathFindingService = game:GetService("PathfindingService")
+
 
 local ButtonsBlacklist = {
 	"AttackHusky",
@@ -7,8 +9,6 @@ local ButtonsBlacklist = {
 	"RailgunBattery1",
 	"SuperSoldier"
 }
-
-
 
 local Selection = game
 
@@ -55,6 +55,8 @@ local dragInput
 local dragStart
 local startPos
 
+local Waypoints
+
 local function update(input)
 	local delta = input.Position - dragStart
 	gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
@@ -85,6 +87,22 @@ UserInputService.InputChanged:Connect(function(input)
 		update(input)
 	end
 end)
+
+function ComputePath(StartingPoint:Vector3, EndingPoint:Vector3)
+	local Path = PathFindingService:CreatePath()
+	
+	local success, errorMessage = pcall(function()
+		Path:ComputeAsync(StartingPoint, EndingPoint)
+	end)
+	
+	if success and Path.Status == Enum.PathStatus.Success then
+		return Path:GetWaypoints()
+	else
+		print(errorMessage)
+		return false
+	end
+	
+end
 
 function CreateFrame(x,y,xsize,ysize, Name)
 	local Frame = Instance.new("Frame")
@@ -317,11 +335,29 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(1)
 			if IsPartOfTable(ButtonsBlacklist,v.Name) or v.Button.Color.R > v.Button.Color.G then
-				
-				character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
+				local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.PlayerTycoon.Essentials.Giver.CollectButton.Position)
+
+				if Waypoints ~= false then
+					for i,v in pairs(Waypoints) do
+
+						character:MoveTo(v.Position)
+						wait(0.1)
+
+					end
+				end
 				
 			else
-				character:MoveTo(v.Button.Position)
+				local Waypoints = ComputePath(character.PrimaryPart.Position,v.Button.Position)
+
+				if Waypoints ~= false then
+					for i,v in pairs(Waypoints) do
+
+						character:MoveTo(v.Position)
+						wait(0.1)
+
+					end
+				end
+
 			end
 			
 		end
@@ -349,11 +385,21 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	end
 
 	while AutoCollect do
-		wait(2)
+		wait(0.5)
+		
+		local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
+		
+		if Waypoints ~= false then
+			for i,v in pairs(Waypoints) do
 
-		character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position + Vector3.new(0,2,0))
+				character:MoveTo(v.Position)
+				wait(0.1)
 
-
+			end
+		end
+		
+		
+		
 	end
 
 end)
