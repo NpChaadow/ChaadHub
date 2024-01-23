@@ -356,7 +356,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 				
 			else
 				
-				if (character.PrimaryPart.Position-v.Button.Position).Magnitude > 200 then
+				if (character.PrimaryPart.Position-v.Button.Position).Magnitude > 500 then
 					
 					local Waypoints = ComputePath(character.PrimaryPart.Position,v.Button.Position)
 
@@ -402,7 +402,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	while AutoCollect do
 		wait(0.5)
 		
-		if (character.PrimaryPart.Position-PlayerTycoon.Essentials.Giver.CollectButton.Position).Magnitude > 200 then
+		if (character.PrimaryPart.Position-PlayerTycoon.Essentials.Giver.CollectButton.Position).Magnitude > 500 then
 			local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
 
 			if Waypoints ~= false then
