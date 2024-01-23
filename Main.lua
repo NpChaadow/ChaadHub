@@ -90,7 +90,7 @@ end)
 
 function ComputePath(StartingPoint:Vector3, EndingPoint:Vector3)
 	local Path = PathFindingService:CreatePath({
-		WaypointSpacing	 = 32
+		WaypointSpacing	 = 16
 	})
 	
 	local success, errorMessage = pcall(function()
@@ -333,31 +333,44 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	end
 	
 	while AutoBuy do
-		wait(.5)
+		wait(.25)
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
-			wait(1)
+			wait(0.2)
 			if IsPartOfTable(ButtonsBlacklist,v.Name) or v.Button.Color.R > v.Button.Color.G then
-				local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
+				
+				if (character.PrimaryPart.Position-PlayerTycoon.Essentials.Giver.CollectButton.Position).Magnitude > 50 then
+					local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
 
-				if Waypoints ~= false then
-					for i,v in pairs(Waypoints) do
+					if Waypoints ~= false then
+						for i,v in pairs(Waypoints) do
 
-						character:MoveTo(v.Position)
-						wait(0.1)
+							character:MoveTo(v.Position)
+							wait(0.02)
 
+						end
 					end
+				else
+					character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
+					wait(0.02)
 				end
 				
 			else
-				local Waypoints = ComputePath(character.PrimaryPart.Position,v.Button.Position)
+				
+				if (character.PrimaryPart.Position-v.Button.Position).Magnitude > 50 then
+					
+					local Waypoints = ComputePath(character.PrimaryPart.Position,v.Button.Position)
 
-				if Waypoints ~= false then
-					for i,v in pairs(Waypoints) do
+					if Waypoints ~= false then
+						for i,v in pairs(Waypoints) do
 
-						character:MoveTo(v.Position)
-						wait(0.1)
+							character:MoveTo(v.Position)
+							wait(0.02)
 
+						end
 					end
+				else
+					character:MoveTo(v.Button.Position)
+					wait(0.02)
 				end
 
 			end
@@ -389,16 +402,22 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	while AutoCollect do
 		wait(0.5)
 		
-		local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
-		
-		if Waypoints ~= false then
-			for i,v in pairs(Waypoints) do
+		if (character.PrimaryPart.Position-PlayerTycoon.Essentials.Giver.CollectButton.Position).Magnitude > 50 then
+			local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
 
-				character:MoveTo(v.Position)
-				wait(0.1)
+			if Waypoints ~= false then
+				for i,v in pairs(Waypoints) do
 
+					character:MoveTo(v.Position)
+					wait(0.1)
+
+				end
 			end
+		else
+			character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
 		end
+		
+		
 		
 		
 		
