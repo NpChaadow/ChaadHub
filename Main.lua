@@ -341,7 +341,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					for i,v in pairs(Waypoints) do
 
 						character:MoveTo(v.Position)
-						wait(0.1)
+						wait(0.02)
 
 					end
 				end
