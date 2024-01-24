@@ -70,7 +70,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 
 	local LastPos = StartPlot.Position
 
-	local Distance = 5
+	local Distance = 2
 
 	while LastPos	~= EndPlot.Position do
 
@@ -85,9 +85,9 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 
 		character:MoveTo(LastPos)
 
-		Distance += 5
+		Distance += 2
 
-		wait(0.5)
+		wait(0.2)
 	end
 
 	character.PrimaryPart.Anchored = false
