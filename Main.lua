@@ -47,6 +47,10 @@ local AutoCollect = false
 local AutoRebirth = false
 local AntiAfk = false
 
+local AutoCrate = false
+local CrateFound = false
+local CratePos
+
 local PlayerTycoons = game.Workspace.PlayerTycoons
 local PlayerTycoon = nil
 
@@ -246,6 +250,9 @@ AutoRebirthButton.Parent = MenuFrame
 local AntiAfkButton = CreateTextButton(0.35,.25,0.1,0.075,"AntiAfkButton", "Anti-Afk",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AntiAfkButton.Parent = MenuFrame
 
+local AutoCrateButton = CreateTextButton(0.5,.15,0.1,0.075,"AutoCrateButton", "Auto Crate",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoCrateButton.Parent = MenuFrame
+
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
 BrowserUIList.FillDirection = Enum.FillDirection.Vertical
@@ -346,10 +353,21 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	end
 	
 	while AutoBuy do
+
 		wait(.25)
+		
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(0.2)
+			
+			if CrateFound then
+				return
+			end
+			
 			local Fnd = false
+			
+			if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
+				v = PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")
+			end
 			
 			if IsPartOfTable(ButtonsBlacklist,v.Name) then
 				
@@ -371,6 +389,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	end
 	
 end)
+
 --Auto Collect
 
 AutoCollectButton.MouseButton1Click:Connect(function()
@@ -392,7 +411,9 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 
 	while AutoCollect do
 		wait(0.5)
-		
+		if CrateFound then
+			return
+		end
 		GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
 		
 	end
@@ -416,6 +437,41 @@ AutoRebirthButton.MouseButton1Click:Connect(function()
 		wait(10)
 		
 	end
+end)
+
+-- Auto Crate
+
+AutoCrateButton.MouseButton1Click:Connect(function()
+	
+	AutoCrate = not AutoCrate
+	if AutoCrate then
+		AutoCrateButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoCrateButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+	
+	while AutoCrate do
+		if CrateFound then
+			
+			GoToPoint(character.PrimaryPart.Position,CratePos)
+			
+			wait(40)
+			
+			CrateFound = false
+			CratePos = nil
+		else
+			for i,v in pairs(workspace:GetChildren())do
+				if v.Name == "Crate" and v:FindFirstChild("Main") ~= nil then
+					
+					CrateFound = true
+					CratePos = v.Main.Position - Vector3.new(0,5,0)
+				end
+			end
+		end
+		
+		wait(10)
+	end
+	
 end)
 
 -- Misc
