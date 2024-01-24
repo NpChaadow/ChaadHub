@@ -221,6 +221,10 @@ end
 
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
+
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+MenuVersionLabel.Parent = MenuFrame
+
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
 
 BrowserFrame.Parent = ScreenGui
@@ -467,7 +471,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 				if v.Name == "Crate" and v:FindFirstChild("Main") ~= nil then
 					
 					CrateFound = true
-					CratePos = v.Main.Position - Vector3.new(0,5,0)
+					CratePos = v.Main
 				end
 			end
 		end
