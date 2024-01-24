@@ -91,7 +91,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 
 		Distance += 2
 
-		wait(0.2)
+		wait(0.1)
 	end
 
 	character.PrimaryPart.Anchored = false
@@ -367,6 +367,9 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 			
 			if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
 				v = PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")
+			end
+			if PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")	~= nil then
+				v = PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")
 			end
 			
 			if IsPartOfTable(ButtonsBlacklist,v.Name) then
