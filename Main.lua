@@ -64,32 +64,33 @@ end
 
 
 function GoToPoint(StartPlot:Instance,EndPlot:Instance)
-
+	character.PrimaryPart.Anchored = true
+	
 	local Direction = (StartPlot.Position - EndPlot.Position).Unit *-1
 
-	local LastPos = StartPlot
+	local LastPos = StartPlot.Position
 
-	local Distance = 0
+	local Distance = 5
 
 	while LastPos	~= EndPlot.Position do
 
 
-		local NewPos = Direction*Distance
+		local NewPos = LastPos + Direction*Distance *-1
 
 		LastPos = NewPos
 
-		if (NewPos - EndPlot.Position).Magnitude < 30 then
+		if (NewPos - EndPlot.Position).Magnitude < 15 then
 			LastPos = EndPlot.Position
 		end
 
 		character:MoveTo(LastPos)
 
-		Distance += 10
+		Distance += 5
 
-		wait(2)
+		wait(0.5)
 	end
 
-
+	character.PrimaryPart.Anchored = false
 end
 
 gui.InputBegan:Connect(function(input)
