@@ -62,6 +62,36 @@ local function update(input)
 	gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
+
+function GoToPoint(StartPlot:Instance,EndPlot:Instance)
+
+	local Direction = (StartPlot.Position - EndPlot.Position).Unit *-1
+
+	local LastPos = StartPlot
+
+	local Distance = 10
+
+	while LastPos	~= EndPlot.Position do
+
+
+		local NewPos = Direction*Distance
+
+		LastPos = NewPos
+
+		if (NewPos - EndPlot.Position).Magnitude < 30 then
+			LastPos = EndPlot.Position
+		end
+
+		character:MoveTo(LastPos)
+
+		Distance += 10
+
+		wait(0.1)
+	end
+
+
+end
+
 gui.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		dragging = true
@@ -87,25 +117,6 @@ UserInputService.InputChanged:Connect(function(input)
 		update(input)
 	end
 end)
-
-function ComputePath(StartingPoint:Vector3, EndingPoint:Vector3)
-	local Path = PathFindingService:CreatePath({
-		WaypointSpacing	 = 16,
-		AgentCanClimb = true
-	})
-	
-	local success, errorMessage = pcall(function()
-		Path:ComputeAsync(StartingPoint, EndingPoint)
-	end)
-	
-	if success and Path.Status == Enum.PathStatus.Success then
-		return Path:GetWaypoints()
-	else
-		print(errorMessage)
-		return false
-	end
-	
-end
 
 function CreateFrame(x,y,xsize,ysize, Name)
 	local Frame = Instance.new("Frame")
@@ -337,43 +348,16 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		wait(.25)
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(0.2)
-			if IsPartOfTable(ButtonsBlacklist,v.Name) or v.Button.Color.R > v.Button.Color.G then
+			if IsPartOfTable(ButtonsBlacklist,v.Name) then
 				
-				
-				local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
-
-				if Waypoints ~= false then
-					for i,v in pairs(Waypoints) do
-						if (character.PrimaryPart.Position-PlayerTycoon.Essentials.Giver.CollectButton.Position).Magnitude > 500 then
-							character:MoveTo(v.Position)
-							wait(0.02)
-						else
-							character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
-							wait(0.02)
-						end
-					end
-				end
-				
+			elseif v.Button.Color.R > v.Button.Color.G then
+		
+				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
 				
 			else
 				
+				GoToPoint(character.PrimaryPart,v.Button)
 				
-					
-				local Waypoints = ComputePath(character.PrimaryPart.Position,v.Button.Position)
-
-				if Waypoints ~= false then
-					for i,U in pairs(Waypoints) do
-						if (character.PrimaryPart.Position-v.Button.Position).Magnitude > 500 then
-							character:MoveTo(U.Position)
-							wait(0.02)
-						else
-							character:MoveTo(v.Button.Position)
-							wait(0.02)
-						end
-					end
-				end
-				
-
 			end
 			
 		end
@@ -403,21 +387,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	while AutoCollect do
 		wait(0.5)
 		
-		
-		local Waypoints = ComputePath(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position)
-
-		if Waypoints ~= false then
-			for i,v in pairs(Waypoints) do
-				if (character.PrimaryPart.Position-PlayerTycoon.Essentials.Giver.CollectButton.Position).Magnitude > 500 then
-					character:MoveTo(v.Position)
-					wait(0.1)
-				else
-					character:MoveTo(PlayerTycoon.Essentials.Giver.CollectButton.Position)
-				end
-				
-			end
-			
-		end
+		GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
 		
 	end
 
