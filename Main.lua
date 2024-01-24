@@ -75,7 +75,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 	while LastPos	~= EndPlot.Position do
 
 
-		local NewPos = LastPos + Direction*Distance *-1
+		local NewPos = LastPos + Direction*Distance
 
 		LastPos = NewPos
 
