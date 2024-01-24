@@ -65,7 +65,7 @@ end
 
 function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 
-	local Direction = (StartPlot.Position - EndPlot.Position).Unit 
+	local Direction = (StartPlot.Position - EndPlot.Position).Unit *-1
 
 	local LastPos = StartPlot
 
