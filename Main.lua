@@ -349,23 +349,28 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		wait(.25)
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(0.2)
+			local Fnd = false
+			
 			if IsPartOfTable(ButtonsBlacklist,v.Name) then
 				
 			elseif v.Button.Color.R > v.Button.Color.G then
-		
+				Fnd = true
 				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
 				
 			else
-				
+				Fnd = true
 				GoToPoint(character.PrimaryPart,v.Button)
 				
+			end
+			
+			if Fnd == false then
+				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
 			end
 			
 		end
 	end
 	
 end)
-
 --Auto Collect
 
 AutoCollectButton.MouseButton1Click:Connect(function()
