@@ -81,10 +81,10 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 
 		character:MoveTo(character.PrimaryPart.Position + Direction*15)
 
-		wait(0.05)
+		wait(0.1)
 		
 	end
-	
+	character.PrimaryPart.Anchored = false
 end
 
 gui.InputBegan:Connect(function(input)
@@ -212,7 +212,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -371,18 +371,15 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 			elseif v.Button.Color.R > v.Button.Color.G then
 				Fnd = true
 				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
-				character.PrimaryPart.Anchored = false
 				
 			else
 				Fnd = true
 				GoToPoint(character.PrimaryPart,v.Button)
-				character.PrimaryPart.Anchored = false
 				
 			end
 			
 			if Fnd == false then
 				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
-				character.PrimaryPart.Anchored = false
 			end
 			
 		end
@@ -415,7 +412,6 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 			return
 		end
 		GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton)
-		character.PrimaryPart.Anchored = false
 	end
 
 end)
@@ -456,7 +452,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 			GoToPoint(character.PrimaryPart,CratePos)
 			
 			wait(40)
-			character.PrimaryPart.Anchored = false
+				
 			CrateFound = false
 			CratePos = nil
 		else
