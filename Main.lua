@@ -210,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -365,7 +365,12 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					
 				elseif v.Button.Color.R > v.Button.Color.G then
 					Fnd = true
-					GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+					
+					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
+						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
+					else
+						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Flag.Flag.Position,30,0.1)
+					end
 					
 				else
 					Fnd = true
@@ -374,7 +379,11 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 				end
 				
 				if Fnd == false then
-					GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
+						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
+					else
+						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Flag.Flag.Position,30,0.1)
+					end
 				end
 			end
 			
@@ -407,7 +416,11 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	while AutoCollect do
 		wait(0.5)
 		if CrateFound ~= true then
-			GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+			if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
+				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
+			else
+				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Flag.Flag.Position,30,0.1)
+			end
 		end
 		
 	end
