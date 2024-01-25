@@ -70,7 +70,7 @@ end
 function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
 	
 
-	while character.PrimaryPart.Position ~= EndPlot.Position do
+	while character.PrimaryPart.Position ~= EndPlot do
 		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
 		
 		if (character.PrimaryPart.Position + Direction*Distance - EndPlot).Magnitude < Distance then
@@ -210,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2g",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
