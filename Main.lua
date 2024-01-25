@@ -79,7 +79,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 			break
 		end
 
-		character:MoveTo(character.PrimaryPart.Position + Direction*2)
+		character:MoveTo(character.PrimaryPart.Position + Direction*7)
 
 		wait(0.05)
 		
