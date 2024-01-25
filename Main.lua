@@ -464,9 +464,8 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 			
 			GoToPoint(character.PrimaryPart.Position,CratePos.Position - Vector3.new(0,10,0),40,0.1)
 				
-			character.PrimaryPart.Anchored = true	
 			wait(35)
-			character.PrimaryPart.Anchored = false
+
 			CrateFound = false
 			CratePos = nil
 		else
