@@ -210,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2h",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -351,34 +351,34 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(0.2)
 			
-			if CrateFound then
-				return
-			end
+			if CrateFound ~= true then
+				local Fnd = false
 			
-			local Fnd = false
-			
-			if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
-				v = PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")
-			end
-			if PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")	~= nil then
-				v = PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")
-			end
-			
-			if IsPartOfTable(ButtonsBlacklist,v.Name) then
+				if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
+					v = PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")
+				end
+				if PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")	~= nil then
+					v = PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")
+				end
 				
-			elseif v.Button.Color.R > v.Button.Color.G then
-				Fnd = true
-				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+				if IsPartOfTable(ButtonsBlacklist,v.Name) then
+					
+				elseif v.Button.Color.R > v.Button.Color.G then
+					Fnd = true
+					GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+					
+				else
+					Fnd = true
+					GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
+					
+				end
 				
-			else
-				Fnd = true
-				GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
-				
+				if Fnd == false then
+					GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+				end
 			end
 			
-			if Fnd == false then
-				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
-			end
+			
 			
 		end
 	end
@@ -406,10 +406,10 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 
 	while AutoCollect do
 		wait(0.5)
-		if CrateFound then
-			return
+		if CrateFound ~= true then
+			GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
 		end
-		GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
+		
 	end
 
 end)
