@@ -447,7 +447,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 	while AutoCrate do
 		if CrateFound then
 			
-			GoToPoint(character.PrimaryPart.Position,CratePos.Position,50,0.1)
+			GoToPoint(character.PrimaryPart.Position,CratePos.Position,40,0.1)
 
 			character.PrimaryPart.Anchored = true
 
