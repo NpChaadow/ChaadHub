@@ -69,7 +69,7 @@ end
 
 function GoToPoint(StartPlot:Instance,EndPlot:Instance,Distance:Number,StepCooldown:Number)
 	
-	character.PrimaryPart.Anchored = true
+	--character.PrimaryPart.Anchored = true
 
 	while character.PrimaryPart.Position ~= EndPlot.Position do
 		local Direction = (character.PrimaryPart.Position - EndPlot.Position).Unit *-1
@@ -84,7 +84,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance,Distance:Number,StepCoold
 		wait(StepCooldown)
 		
 	end
-	character.PrimaryPart.Anchored = false
+	--character.PrimaryPart.Anchored = false
 end
 
 gui.InputBegan:Connect(function(input)
@@ -212,7 +212,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2c",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2d",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
