@@ -474,6 +474,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 					CratePos = v.Main
 				end
 			end
+			wait(15)
 		end
 		
 		wait(10)
