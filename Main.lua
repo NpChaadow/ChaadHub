@@ -460,7 +460,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 	while AutoCrate do
 		if CrateFound then
 			
-			GoToPoint(character.PrimaryPart.Position,CratePos)
+			GoToPoint(character.PrimaryPart,CratePos)
 			
 			wait(40)
 			
