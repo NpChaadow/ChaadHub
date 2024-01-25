@@ -210,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3d",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3e",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -462,7 +462,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 	while AutoCrate do
 		if CrateFound then
 			
-			GoToPoint(character.PrimaryPart.Position,CratePos.Position - Vector3.new(0,10,0),40,0.1)
+			GoToPoint(character.PrimaryPart.Position,CratePos.Position + Vector3.new(0,10,0),40,0.1)
 				
 			wait(35)
 
