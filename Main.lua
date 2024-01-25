@@ -68,32 +68,24 @@ end
 
 
 function GoToPoint(StartPlot:Instance,EndPlot:Instance)
+	
 	character.PrimaryPart.Anchored = true
 
-	local LastPos = StartPlot.Position
-
-	local Distance = 2
-
-	while LastPos	~= EndPlot.Position do
-
-  local Direction = (StartPlot.Position - EndPlot.Position).Unit *-1
-
-		local NewPos = LastPos + Direction*Distance
-
-		LastPos = NewPos
-
-		if (NewPos - EndPlot.Position).Magnitude < 15 then
-			LastPos = EndPlot.Position
+	while character.PrimaryPart.Position ~= EndPlot.Position do
+		local Direction = (character.PrimaryPart.Position - EndPlot.Position).Unit *-1
+		
+		if (character.PrimaryPart.Position + Direction*2 - EndPlot.Position).Magnitude < 15 then
+			character:MoveTo(EndPlot.Position)
+			break
 		end
 
-		character:MoveTo(LastPos)
+		character:MoveTo(character.PrimaryPart.Position + Direction*2)
 
-		Distance += 2
-
-		wait(0.1)
+		wait(0.05)
+		
 	end
-
 	character.PrimaryPart.Anchored = false
+	
 end
 
 gui.InputBegan:Connect(function(input)
@@ -221,7 +213,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1e",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
