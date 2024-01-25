@@ -69,8 +69,6 @@ end
 
 function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 	character.PrimaryPart.Anchored = true
-	
-	local Direction = (StartPlot.Position - EndPlot.Position).Unit *-1
 
 	local LastPos = StartPlot.Position
 
@@ -78,6 +76,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 
 	while LastPos	~= EndPlot.Position do
 
+  local Direction = (StartPlot.Position - EndPlot.Position).Unit *-1
 
 		local NewPos = LastPos + Direction*Distance
 
@@ -222,7 +221,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1d",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1e",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
