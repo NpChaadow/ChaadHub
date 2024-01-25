@@ -67,15 +67,14 @@ local function update(input)
 end
 
 
-function GoToPoint(StartPlot:Instance,EndPlot:Instance,Distance:Number,StepCooldown:Number)
+function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
 	
-	--character.PrimaryPart.Anchored = true
 
 	while character.PrimaryPart.Position ~= EndPlot.Position do
-		local Direction = (character.PrimaryPart.Position - EndPlot.Position).Unit *-1
+		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
 		
-		if (character.PrimaryPart.Position + Direction*Distance - EndPlot.Position).Magnitude < Distance then
-			character:MoveTo(EndPlot.Position)
+		if (character.PrimaryPart.Position + Direction*Distance - EndPlot).Magnitude < Distance then
+			character:MoveTo(EndPlot)
 			break
 		end
 
@@ -84,7 +83,6 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance,Distance:Number,StepCoold
 		wait(StepCooldown)
 		
 	end
-	--character.PrimaryPart.Anchored = false
 end
 
 gui.InputBegan:Connect(function(input)
@@ -212,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2e",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.2f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -370,16 +368,16 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 				
 			elseif v.Button.Color.R > v.Button.Color.G then
 				Fnd = true
-				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton,15,0.1)
+				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
 				
 			else
 				Fnd = true
-				GoToPoint(character.PrimaryPart,v.Button,15,0.1)
+				GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
 				
 			end
 			
 			if Fnd == false then
-				GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton,15,0.1)
+				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
 			end
 			
 		end
@@ -411,7 +409,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 		if CrateFound then
 			return
 		end
-		GoToPoint(character.PrimaryPart,PlayerTycoon.Essentials.Giver.CollectButton,15,0.1)
+		GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)
 	end
 
 end)
@@ -449,10 +447,14 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 	while AutoCrate do
 		if CrateFound then
 			
-			GoToPoint(character.PrimaryPart,CratePos,30,0.1)
-			
-			wait(40)
+			GoToPoint(character.PrimaryPart.Position,CratePos.Position,50,0.1)
+
+			character.PrimaryPart.Anchored = true
+
+			GoToPoint(character.PrimaryPart.Position,CratePos.Position - Vector3.new(0,10,0),10,0.1)
 				
+			wait(35)
+			character.PrimaryPart.Anchored = false
 			CrateFound = false
 			CratePos = nil
 		else
@@ -463,7 +465,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 					CratePos = v.Main
 				end
 			end
-			wait(15)
+			wait(5)
 		end
 		
 		wait(10)
