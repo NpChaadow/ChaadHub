@@ -74,7 +74,7 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 	while character.PrimaryPart.Position ~= EndPlot.Position do
 		local Direction = (character.PrimaryPart.Position - EndPlot.Position).Unit *-1
 		
-		if (character.PrimaryPart.Position + Direction*2 - EndPlot.Position).Magnitude < 15 then
+		if (character.PrimaryPart.Position + Direction*7 - EndPlot.Position).Magnitude < 15 then
 			character:MoveTo(EndPlot.Position)
 			break
 		end
@@ -213,7 +213,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.1g",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
