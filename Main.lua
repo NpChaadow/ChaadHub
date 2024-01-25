@@ -75,11 +75,11 @@ function GoToPoint(StartPlot:Instance,EndPlot:Instance)
 		local Direction = (character.PrimaryPart.Position - EndPlot.Position).Unit *-1
 		
 		if (character.PrimaryPart.Position + Direction*15 - EndPlot.Position).Magnitude < 15 then
-			character.PrimaryPart.Position = EndPlot.Position
+			character:MoveTo(EndPlot.Position)
 			break
 		end
 
-		character.PrimaryPart.Position = character.PrimaryPart.Position + Direction*15
+		character:MoveTo(character.PrimaryPart.Position + Direction*15)
 
 		wait(0.05)
 		
