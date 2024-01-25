@@ -6,7 +6,6 @@ local ButtonsBlacklist = {
 	"AttackHusky",
 	"AutoCollect",
 	"DoubleCash",
-	"RailgunBattery1",
 	"SuperSoldier"
 }
 
@@ -53,6 +52,7 @@ local CratePos
 
 local PlayerTycoons = game.Workspace.PlayerTycoons
 local PlayerTycoon = nil
+local TycoonPos
 
 local dragging
 local dragInput
@@ -210,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3c",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -333,6 +333,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoons:GetChildren()) do
 			if v.TycoonVals.Owner.Value == Player then
 				PlayerTycoon = v
+				TycoonPos = PlayerTycoon.Essentials.Giver.CollectButton.Position
 			end
 		end
 	end
@@ -369,7 +370,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
 						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
 					else
-						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Flag.Flag.Position,30,0.1)
+						GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 					end
 					
 				else
@@ -382,7 +383,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
 						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
 					else
-						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Flag.Flag.Position,30,0.1)
+						GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 					end
 				end
 			end
@@ -402,6 +403,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoons:GetChildren()) do
 			if v.TycoonVals.Owner.Value == Player then
 				PlayerTycoon = v
+				TycoonPos = PlayerTycoon.Essentials.Giver.CollectButton.Position
 			end
 		end
 	end
@@ -419,7 +421,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 			if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
 				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
 			else
-				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Flag.Flag.Position,30,0.1)
+				GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 			end
 		end
 		
