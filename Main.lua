@@ -209,7 +209,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
