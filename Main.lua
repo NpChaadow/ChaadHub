@@ -511,7 +511,7 @@ KillAuraButton.MouseButton1Click:Connect(function()
 		KillAuraButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
 		
-	local Gun = Player.Backpack:FindFirstChild("Barret")
+	local Gun = Player.Backpack:FindFirstChild("Barrett")
 	print(Gun)
 	while KillAura do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,50)
