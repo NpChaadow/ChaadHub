@@ -26,7 +26,7 @@ local ScreenGui = Instance.new('ScreenGui')
 ScreenGui.Parent = PlayerGui
 
 local ButtonFrame = Instance.new("TextButton")
-ButtonFrame.Parent = ScreenGui
+ButtonFrame.Parent = game.CoreGui
 ButtonFrame.Size = UDim2.new(0.1,0,0.1,0)
 ButtonFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
 ButtonFrame.AnchorPoint = Vector2.new(0.5,0.5)
