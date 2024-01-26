@@ -484,6 +484,9 @@ end)
 -- Anti Afk
 
 AntiAfkButton.MouseButton1Click:Connect(function()
+
+	AntiAfk = not AntiAfk
+	
 	if AntiAfk then
 		AntiAfkButton.BackgroundColor3 = Color3.new(0, 1, 0)
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/Rice-Anti-Afk/main/Wind", true))()
