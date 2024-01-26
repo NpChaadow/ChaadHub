@@ -208,9 +208,9 @@ function IsPartOfTable(Table, Check)
 end
 
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
-MenuFrame.Parent = ScreenGui
+MenuFrame.Parent = game.CoreGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3e",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -482,6 +482,17 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 		wait(10)
 	end
 	
+end)
+-- Anti Afk
+
+AntiAfkButton.MouseButton1Click:Connect(function()
+	if AntiAfk then
+		AntiAfkButton.BackgroundColor3 = Color3.new(0, 1, 0)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/Rice-Anti-Afk/main/Wind", true))()
+	else
+		game.CoreGui.Rice:Destroy()
+		AntiAfkButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
 end)
 
 -- Misc
