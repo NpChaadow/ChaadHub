@@ -512,7 +512,7 @@ KillAuraButton.MouseButton1Click:Connect(function()
 	end
 		
 	local Gun = Player.Backpack:FindFirstChild("Barret")
-		
+	print(Gun)
 	while KillAura do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,50)
 		
