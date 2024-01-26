@@ -209,7 +209,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4c",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -522,12 +522,12 @@ KillAuraButton.MouseButton1Click:Connect(function()
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
 				
 				if vHumanoid ~= Player.Character.Humanoid then
-					while vHumanoid.Health > 0 do
+					while vHumanoid.Health > 0 and KillAura do
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position-Vector3.new(0,2,0))
 	
 						Gun.Parent = character
 						Gun:Activate()
-						wait(.1)
+						wait(.025)
 					end
 				end
 				
