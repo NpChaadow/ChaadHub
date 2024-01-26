@@ -18,15 +18,13 @@ local humanoid = character:WaitForChild("Humanoid")
 
 local Mouse = Player:GetMouse()
 
-local PlayerGui = Player:WaitForChild("PlayerGui")
-
 local UserInputService = game:GetService("UserInputService")
 
 local ScreenGui = Instance.new('ScreenGui')
-ScreenGui.Parent = PlayerGui
+ScreenGui.Parent = game.CoreGui
 
 local ButtonFrame = Instance.new("TextButton")
-ButtonFrame.Parent = game.CoreGui
+ButtonFrame.Parent = ScreenGui
 ButtonFrame.Size = UDim2.new(0.1,0,0.1,0)
 ButtonFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
 ButtonFrame.AnchorPoint = Vector2.new(0.5,0.5)
@@ -208,7 +206,7 @@ function IsPartOfTable(Table, Check)
 end
 
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
-MenuFrame.Parent = game.CoreGui
+MenuFrame.Parent = ScreenGui
 
 local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.3f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
