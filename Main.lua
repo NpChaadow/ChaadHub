@@ -1,7 +1,3 @@
-local VirtualUser = game:GetService("VirtualUser")
-local PathFindingService = game:GetService("PathfindingService")
-
-
 local ButtonsBlacklist = {
 	"AttackHusky",
 	"AutoCollect",
@@ -209,7 +205,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4g",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -514,12 +510,13 @@ end)
 	print(Gun)
 	while Aimbot do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,150)
-		
+		print("a")
 			
 		for i,v in pairs(Parts) do
-if v == nil then
- break;
-end
+			if v == nil then
+ 				break;
+				print("b")
+			end
 			if v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
 				
@@ -536,7 +533,7 @@ end
 			end
 			
 		end
- wait(0.5)
+ 		wait(0.5)
 	end
 	
 end)
@@ -545,8 +542,8 @@ end)
 
 Mouse.Button1Up:Connect(function()
 	if Mouse.Target == nil then
- return
-end
+ 		return
+	end
 
 	if Mouse.Target.Parent == nil then
 		return
