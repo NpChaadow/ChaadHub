@@ -546,6 +546,42 @@ AutoStabButton.MouseButton1Click:Connect(function()
 	else
 		AutoStabButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
+
+	local Knife = Player.Backpack:FindFirstChild("HeatKnife")
+	if Knife == nil then
+		AutoStab == false
+		AutoStabButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+		return
+	end
+
+	while AutoStab do
+		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
+			
+		for i,v in pairs(Parts) do
+			if v == nil or v.Parent == nil then
+ 				break		
+			end
+			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
+				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
+					
+				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
+						
+					while v.Parent ~= nil and vHumanoid.Health > 0 and AutoStab and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
+						
+						GoToPoint(character.PrimaryPart.Position,v.PrimaryPart,40,0.1)
+						Knife.Parent = character
+						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
+						Knife:Activate()
+						wait(0.5)
+					end
+						
+				end
+				
+			end
+			
+		end
+ 		wait(0.5)
+	end
 end)
 -- Misc
 
