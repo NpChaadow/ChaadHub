@@ -534,8 +534,9 @@ KillAuraButton.MouseButton1Click:Connect(function()
 			end
 			
 		end
+ wait(0.5)
 	end
-	wait(0.5)
+	
 end)
 
 -- Misc
