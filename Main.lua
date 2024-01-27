@@ -513,13 +513,13 @@ end)
 			if v == nil or v.Parent == nil then
  				break		
 			end
-			if v.Parent:FindFirstChild("Humanoid") ~= nil then
+			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
 					
-				if vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
-					while vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
-						if v.Parent:FindFirstChild("Head") ~= nil then
-							workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position-Vector3.new(0,2,0))
+				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
+					while v.Parent ~= nil and vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
+						if v.Parent ~= nil and v.Parent:FindFirstChild("Head") ~= nil then
+							workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
 							wait(.0125)
 						end
 						
