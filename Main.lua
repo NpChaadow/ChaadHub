@@ -568,7 +568,7 @@ AutoStabButton.MouseButton1Click:Connect(function()
 						
 					while v.Parent ~= nil and vHumanoid.Health > 0 and AutoStab and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						
-						GoToPoint(character.PrimaryPart.Position,v.PrimaryPart,40,0.1)
+						GoToPoint(character.PrimaryPart.Position,v.Parent.PrimaryPart,40,0.1)
 						Knife.Parent = character
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
 						Knife:Activate()
