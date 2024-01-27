@@ -205,7 +205,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4h",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4i",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -506,15 +506,11 @@ end)
 		AimbotButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
 		
-	local Gun = Player.Backpack:FindFirstChild("G36C")
-	print(Gun)
 	while Aimbot do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,150)
-		print("a")
 			
 		for i,v in pairs(Parts) do
 			if v == nil or v.Parent == nil then
-				print("b")
  				break		
 			end
 			if v.Parent:FindFirstChild("Humanoid") ~= nil then
@@ -523,10 +519,7 @@ end)
 				if vHumanoid ~= Player.Character.Humanoid then
 					while vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position-Vector3.new(0,2,0))
-	
-						Gun.Parent = character
-						Gun:Activate()
-						wait(.025)
+						wait(.0125)
 					end
 				end
 				
