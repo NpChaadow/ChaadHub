@@ -206,7 +206,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.5a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.5b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -538,6 +538,15 @@ end)
 	
 end)
 
+--Auto Stab
+AutoStabButton.MouseButton1Click:Connect(function()	
+	AutoStab = not AutoStab
+	if AutoStab then
+		AutoStabButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoStabButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+end)
 -- Misc
 
 Mouse.Button1Up:Connect(function()
