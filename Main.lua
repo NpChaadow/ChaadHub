@@ -544,7 +544,7 @@ end)
 -- Misc
 
 Mouse.Button1Up:Connect(function()
-	if mouse.Target == nil then
+	if Mouse.Target == nil then
  return
 end
 
