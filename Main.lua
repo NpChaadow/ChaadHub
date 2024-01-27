@@ -574,7 +574,7 @@ AutoStabButton.MouseButton1Click:Connect(function()
 						Knife.Parent = character
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
 						Knife:Activate()
-						wait(0.5)
+						wait(0.33)
 					end
 						
 				end
