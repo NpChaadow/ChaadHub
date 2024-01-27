@@ -40,6 +40,7 @@ local AutoCollect = false
 local AutoRebirth = false
 local AntiAfk = false
 local Aimbot = false
+local AutoStab = false
 
 local AutoCrate = false
 local CrateFound = false
@@ -242,6 +243,9 @@ AutoCrateButton.Parent = MenuFrame
 
 local AimbotButton = CreateTextButton(0.5,.25,0.1,0.075,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AimbotButton.Parent = MenuFrame
+
+local AutoStabButton = AutoStabButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto Stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoStabButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
@@ -533,6 +537,56 @@ end)
 	end
 	
 end)
+
+-- Auto Stab
+AutoStabButton.MouseButton1Click:Connect(function()
+	
+	AutoStab = not AutoStab
+	if AutoStab then
+		AutoStabButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoStabButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+
+	local Knife = Player.Backpack:FindFirstChild("HeatKnife") or character:FindFirstChild("HeatKnife")
+
+	if Knife == nil then
+		return
+	end
+		
+	while AutoStab do
+		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
+			
+		for i,v in pairs(Parts) do
+			if v == nil or v.Parent == nil then
+ 				break		
+			end
+			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
+				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
+					
+				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
+					while v.Parent ~= nil and vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
+						if v.Parent ~= nil and v.Parent:FindFirstChild("Head") ~= nil then
+							if v:FindFirstChildOfClass("Tool") == nil then
+								Knife.Parent = character
+							end
+
+							Knife:Activate()
+							GoToPoint(character.PrimaryPart.Position,v.Parent.PrimaryPart.Position)
+							wait(.0125)
+						end
+						
+					end
+				end
+				
+			end
+			
+		end
+ 		wait(0.5)
+	end
+	
+end)
+
 
 -- Misc
 
