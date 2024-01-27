@@ -514,14 +514,14 @@ end)
 			
 		for i,v in pairs(Parts) do
 			if v == nil then
- 				break;
 				print("b")
+ 				break		
 			end
 			if v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
 				
 				if vHumanoid ~= Player.Character.Humanoid then
-					while vHumanoid.Health > 0 and KillAura do
+					while vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position-Vector3.new(0,2,0))
 	
 						Gun.Parent = character
