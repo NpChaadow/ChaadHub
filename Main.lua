@@ -506,7 +506,7 @@ end)
 		AimbotButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
 		
-	local Gun = Player.Backpack:FindFirstChild("Barrett")
+	local Gun = Player.Backpack:FindFirstChild("G36C")
 	print(Gun)
 	while Aimbot do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,150)
