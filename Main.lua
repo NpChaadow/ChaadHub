@@ -568,7 +568,7 @@ AutoStabButton.MouseButton1Click:Connect(function()
 						
 					while v.Parent ~= nil and vHumanoid.Health > 0 and AutoStab and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						if (v.Parent.PrimaryPart.Position-character.PrimaryPart.Position).Magnitude > 4 then
-							GoToPoint(character.PrimaryPart.Position,v.Parent.PrimaryPart.Position,40,0.1)
+							GoToPoint(character.PrimaryPart.Position,v.Parent.PrimaryPart.Position + Vector3.new(2,0,2,40,0.1)
 						end
 						
 						Knife.Parent = character
