@@ -244,7 +244,7 @@ AutoCrateButton.Parent = MenuFrame
 local AimbotButton = CreateTextButton(0.5,.25,0.1,0.075,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AimbotButton.Parent = MenuFrame
 
-local AutoStabButton = AutoStabButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto Stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoStabButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto Stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoStabButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
