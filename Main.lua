@@ -518,6 +518,7 @@ end)
 					
 				if vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
 					while vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
+						print(v.Parent.Name)
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position-Vector3.new(0,2,0))
 						wait(.0125)
 					end
