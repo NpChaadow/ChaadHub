@@ -566,5 +566,3 @@ Mouse.Button1Up:Connect(function()
 	BrowserFrame.Visible = true
 	Refresh()
 end)
-
-script:Clone(game.StarterPlayer.StarterPlayerScripts)
