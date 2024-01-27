@@ -43,7 +43,7 @@ local ClickResearsh = false
 local AutoCollect = false
 local AutoRebirth = false
 local AntiAfk = false
-local KillAura = false
+local Aimbot = false
 
 local AutoCrate = false
 local CrateFound = false
@@ -209,7 +209,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4e",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4f",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -244,8 +244,8 @@ AntiAfkButton.Parent = MenuFrame
 local AutoCrateButton = CreateTextButton(0.5,.15,0.1,0.075,"AutoCrateButton", "Auto Crate",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoCrateButton.Parent = MenuFrame
 
-local KillAuraButton = CreateTextButton(0.5,.25,0.1,0.075,"KillAuraButton", "Kill Aura",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-KillAuraButton.Parent = MenuFrame
+local AimbotButton = CreateTextButton(0.5,.25,0.1,0.075,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AimbotButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
@@ -500,24 +500,26 @@ AntiAfkButton.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Kill Aura
-
-KillAuraButton.MouseButton1Click:Connect(function()
+-- Aimbot
+ AimbotButton.MouseButton1Click:Connect(function()
 	
-	KillAura = not KillAura
-	if KillAura then
-		KillAuraButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	Aimbot = not Aimbot
+	if Aimbot then
+		AimbotButton.BackgroundColor3 = Color3.new(0, 1, 0)
 	else
-		KillAuraButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+		AimbotButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
 		
 	local Gun = Player.Backpack:FindFirstChild("Barrett")
 	print(Gun)
-	while KillAura do
-		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,50)
+	while Aimbot do
+		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,150)
 		
 			
 		for i,v in pairs(Parts) do
+if v == nil then
+ break;
+end
 			if v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
 				
@@ -542,7 +544,10 @@ end)
 -- Misc
 
 Mouse.Button1Up:Connect(function()
-	
+	if mouse.Target == nil then
+ return
+end
+
 	if Mouse.Target.Parent == nil then
 		return
 	end
