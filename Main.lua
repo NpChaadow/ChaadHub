@@ -507,7 +507,7 @@ end)
 	end
 		
 	while Aimbot do
-		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,150)
+		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
 			
 		for i,v in pairs(Parts) do
 			if v == nil or v.Parent == nil then
