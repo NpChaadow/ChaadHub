@@ -40,6 +40,7 @@ local AutoCollect = false
 local AutoRebirth = false
 local AntiAfk = false
 local Aimbot = false
+local AutoStab = false
 
 local AutoCrate = false
 local CrateFound = false
@@ -205,7 +206,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.4l",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.5a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -225,23 +226,26 @@ GetGameFilesButton.Parent = MenuFrame
 local ClickResearchButton = CreateTextButton(0.06,0.25,0.1,0.075,"ClickResearchButton", "Click to research",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 ClickResearchButton.Parent = MenuFrame
 
-local AutoBuyButton = CreateTextButton(0.20,0.25,0.1,0.075,"AutoBuyButton", "Auto Buy",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoBuyButton = CreateTextButton(0.20,0.25,0.1,0.075,"AutoBuyButton", "Auto buy",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoBuyButton.Parent = MenuFrame
 
-local AutoCollectButton = CreateTextButton(0.20,0.15,0.1,0.075,"AutoCollectButton", "Auto Collect",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoCollectButton = CreateTextButton(0.20,0.15,0.1,0.075,"AutoCollectButton", "Auto collect",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoCollectButton.Parent = MenuFrame
 
-local AutoRebirthButton = CreateTextButton(0.35,0.15,0.1,0.075,"AutoRebirthButton", "Auto Rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoRebirthButton = CreateTextButton(0.35,0.15,0.1,0.075,"AutoRebirthButton", "Auto rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoRebirthButton.Parent = MenuFrame
 
 local AntiAfkButton = CreateTextButton(0.35,.25,0.1,0.075,"AntiAfkButton", "Anti-Afk",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AntiAfkButton.Parent = MenuFrame
 
-local AutoCrateButton = CreateTextButton(0.5,.15,0.1,0.075,"AutoCrateButton", "Auto Crate",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoCrateButton = CreateTextButton(0.5,.15,0.1,0.075,"AutoCrateButton", "Auto crate",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoCrateButton.Parent = MenuFrame
 
 local AimbotButton = CreateTextButton(0.5,.25,0.1,0.075,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AimbotButton.Parent = MenuFrame
+
+local AutoStabButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoStabButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
