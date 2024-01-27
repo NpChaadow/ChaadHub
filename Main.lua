@@ -549,7 +549,7 @@ AutoStabButton.MouseButton1Click:Connect(function()
 
 	local Knife = Player.Backpack:FindFirstChild("HeatKnife")
 	if Knife == nil then
-		AutoStab == false
+		AutoStab = false
 		AutoStabButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 		return
 	end
