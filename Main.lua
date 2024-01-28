@@ -604,7 +604,7 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 	while AutoFarmEvent do
 		for i,v in pairs(EventFolder:GetChildren()) do
 			if v ~= nil and v:FindFirstChild("Hitbox") ~= nil and v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil then
-				while v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil then
+				while v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil do
 					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
 						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),30,0.1)
 					end
