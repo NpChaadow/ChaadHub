@@ -360,8 +360,11 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(0.2)
+			if AutoBuy == false then
+				break
+			end
 			
-			if CrateFound ~= true then
+			if CrateFound ~= true and AutoBuy then
 				local Fnd = false
 			
 				if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
@@ -426,7 +429,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 
 	while AutoCollect do
 		wait(0.5)
-		if CrateFound ~= true then
+		if CrateFound ~= true and AutoCollect then
 			if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
 				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
 			else
@@ -471,7 +474,7 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 	while AutoCrate do
 		if CrateFound then
 			
-			GoToPoint(character.PrimaryPart.Position,CratePos.Position + Vector3.new(0,10,0),40,0.1)
+			GoToPoint(character.PrimaryPart.Position,CratePos.Position + Vector3.new(0,20,0),40,0.1)
 				
 			wait(35)
 
@@ -606,7 +609,7 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 			if v ~= nil and v:FindFirstChild("Hitbox") ~= nil and v.Hitbox:FindFirstChild("ProximityPrompt") ~= nil then
 				while v:FindFirstChild("Hitbox") ~= nil and v.Hitbox:FindFirstChild("ProximityPrompt") ~= nil do
 					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
-						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),30,0.1)
+						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),60,0.2)
 					end
 					fireproximityprompt(v.Hitbox:FindFirstChild("ProximityPrompt"),1,false)
 					wait(1)
