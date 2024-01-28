@@ -68,7 +68,11 @@ end
 local function fireproximityprompt(Obj, Amount, Skip) if Obj.ClassName == "ProximityPrompt" then Amount = Amount or 1 local PromptTime = Obj.HoldDuration if Skip then Obj.HoldDuration = 0 end for i = 1, Amount do Obj:InputHoldBegin() if not Skip then wait(Obj.HoldDuration) end Obj:InputHoldEnd() end Obj.HoldDuration = PromptTime else error("userdata<ProximityPrompt> expected") end end
 
 function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
-	
+	for i,v in pairs(character:GetChildren())do
+  if v:IsA("Part") then
+   v.CanCollide = false
+  end
+ end
 
 	while character.PrimaryPart.Position ~= EndPlot do
 		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
@@ -83,6 +87,11 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 		wait(StepCooldown)
 		
 	end
+	for i,v in pairs(character:GetChildren())do
+  if v:IsA("Part") then
+   v.CanCollide = true
+  end
+ end
 end
 
 gui.InputBegan:Connect(function(input)
@@ -210,7 +219,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.1.0a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.1.0b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
