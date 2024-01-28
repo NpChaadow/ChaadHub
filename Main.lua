@@ -65,6 +65,7 @@ local function update(input)
 	gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
+local function fireproximityprompt(Obj, Amount, Skip) if Obj.ClassName == "ProximityPrompt" then Amount = Amount or 1 local PromptTime = Obj.HoldDuration if Skip then Obj.HoldDuration = 0 end for i = 1, Amount do Obj:InputHoldBegin() if not Skip then wait(Obj.HoldDuration) end Obj:InputHoldEnd() end Obj.HoldDuration = PromptTime else error("userdata<ProximityPrompt> expected") end end
 
 function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
 	
@@ -209,7 +210,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.6c",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.6d",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -608,7 +609,7 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
 						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),30,0.1)
 					end
-					FireProximityPrompt(v.Hitbox:FindFirstChild("ProximityPrompt"),1)
+					fireproximityprompt(v.Hitbox:FindFirstChild("ProximityPrompt"),1,false)
 					wait(1)
 				end
 			end
