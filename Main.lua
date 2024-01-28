@@ -41,6 +41,7 @@ local AutoRebirth = false
 local AntiAfk = false
 local Aimbot = false
 local AutoStab = false
+local AutoFarmEvent = false
 
 local AutoCrate = false
 local CrateFound = false
@@ -49,6 +50,8 @@ local CratePos
 local PlayerTycoons = game.Workspace.PlayerTycoons
 local PlayerTycoon = nil
 local TycoonPos
+
+local EventFolder = workspace.CurrentEventCollectables
 
 local dragging
 local dragInput
@@ -206,7 +209,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.5g",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.6a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -246,6 +249,9 @@ AimbotButton.Parent = MenuFrame
 
 local AutoStabButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoStabButton.Parent = MenuFrame
+
+local AutoFarmEventButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoFarmEventButton", "Auto farm event",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoFarmEventButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
@@ -585,6 +591,33 @@ AutoStabButton.MouseButton1Click:Connect(function()
  		wait(0.5)
 	end
 end)
+--Auto Farm Event
+
+AutoFarmEventButton.MouseButton1Click:Connect(function()
+	AutoFarmEvent = not AutoFarmEvent
+	if AutoFarmEvent then
+		AutoFarmEventButton.BackgroundColor3 = Color3.new(0, 1, 0)
+	else
+		AutoFarmEventButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
+	end
+
+	while AutoFarmEvent do
+		for i,v in pairs(EventFolder:GetChildren()) do
+			if v ~= nil and v:FindFirstChild("Hitbox") ~= nil and v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil then
+				while v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil then
+					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
+						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),30,0.1)
+					end
+					FireProximityPrompt(v.HitBox:FindFirstChild("ProximityPrompt"),1)
+					wait(1)
+				end
+			end
+		end
+		wait(1)
+	end
+end)
+
+
 -- Misc
 
 Mouse.Button1Up:Connect(function()
