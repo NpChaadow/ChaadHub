@@ -608,7 +608,7 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
 						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),30,0.1)
 					end
-					FireProximityPrompt(v.HitBox:FindFirstChild("ProximityPrompt"),1)
+					FireProximityPrompt(v.Hitbox:FindFirstChild("ProximityPrompt"),1)
 					wait(1)
 				end
 			end
