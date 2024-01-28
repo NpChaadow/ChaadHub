@@ -1,3 +1,5 @@
+local ContextActionService = game:GetService("ContextActionService")
+
 local ButtonsBlacklist = {
 	"AttackHusky",
 	"AutoCollect",
@@ -261,6 +263,9 @@ AutoStabButton.Parent = MenuFrame
 
 local AutoFarmEventButton = CreateTextButton(0.65,.25,0.1,0.075,"AutoFarmEventButton", "Auto farm event",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoFarmEventButton.Parent = MenuFrame
+
+local GetContextActionButton = CreateTextButton(0.65,.25,0.1,0.075,"GetContextActionButton", "Get context action",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+GetContextActionButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
@@ -629,7 +634,15 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 	end
 end)
 
+-- Get Context Action
 
+GetContextActionButton.MouseButton1Click:Connect(function()
+
+	for i,v in pairs(ContextActionService:GetAllBoundActionInfo) do
+		print(i, v.inputTypes)
+	end
+		
+end)
 -- Misc
 
 Mouse.Button1Up:Connect(function()
