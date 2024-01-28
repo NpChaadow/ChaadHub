@@ -73,7 +73,7 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 	while character.PrimaryPart.Position ~= EndPlot do
 		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
 		
-		if (character.PrimaryPart.Position + Direction*NewDist - EndPlot).Magnitude < Distance then
+		if (character.PrimaryPart.Position + Direction*NewDist - EndPlot).Magnitude < NewDist then
 			character:MoveTo(EndPlot)
 			break
 		end
