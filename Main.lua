@@ -537,7 +537,7 @@ end)
 			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
 					
-				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
+				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Character" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
 					while v.Parent ~= nil and vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						if v.Parent ~= nil and v.Parent:FindFirstChild("Head") ~= nil then
 							workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
@@ -616,9 +616,10 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(EventFolder:GetChildren()) do
 			if v ~= nil and v:FindFirstChild("Hitbox") ~= nil and v.Hitbox:FindFirstChild("ProximityPrompt") ~= nil then
 				while v:FindFirstChild("Hitbox") ~= nil and v.Hitbox:FindFirstChild("ProximityPrompt") ~= nil do
-					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
+					if v:FindFirstChild("Hitbox") ~= nil and (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
 						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),45,0.2)
 					end
+					wait(1)
 					fireproximityprompt(v.Hitbox:FindFirstChild("ProximityPrompt"),1,false)
 					wait(1)
 				end
