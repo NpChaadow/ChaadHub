@@ -68,30 +68,29 @@ end
 local function fireproximityprompt(Obj, Amount, Skip) if Obj.ClassName == "ProximityPrompt" then Amount = Amount or 1 local PromptTime = Obj.HoldDuration if Skip then Obj.HoldDuration = 0 end for i = 1, Amount do Obj:InputHoldBegin() if not Skip then wait(Obj.HoldDuration) end Obj:InputHoldEnd() end Obj.HoldDuration = PromptTime else error("userdata<ProximityPrompt> expected") end end
 
 function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
-	for i,v in pairs(character:GetChildren())do
-  if v:IsA("Part") then
-   v.CanCollide = false
-  end
- end
-
+	local NewDist = Distance
+	local PreviousPos = StartPlot
 	while character.PrimaryPart.Position ~= EndPlot do
 		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
 		
-		if (character.PrimaryPart.Position + Direction*Distance - EndPlot).Magnitude < Distance then
+		if (character.PrimaryPart.Position + Direction*NewDist - EndPlot).Magnitude < Distance then
 			character:MoveTo(EndPlot)
 			break
 		end
 
-		character:MoveTo(character.PrimaryPart.Position + Direction*Distance)
+		character:MoveTo(character.PrimaryPart.Position + Direction*NewDist)
 
+		if (PreviousPos-character.PrimaryPart.Position).Magnitude < Distance/4) then
+			NewDist = NewDist+10
+		else
+			NewDist = Distance
+		end
+
+		PreviousPos = character.PrimaryPart.Position
+		
 		wait(StepCooldown)
 		
 	end
-	for i,v in pairs(character:GetChildren())do
-  if v:IsA("Part") then
-   v.CanCollide = true
-  end
- end
 end
 
 gui.InputBegan:Connect(function(input)
