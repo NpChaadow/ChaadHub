@@ -74,7 +74,7 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 	local PreviousPos = StartPlot
 	while character.PrimaryPart.Position ~= EndPlot do
 		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
-		
+
 		if (character.PrimaryPart.Position + Direction*NewDist - EndPlot).Magnitude < NewDist then
 			character:MoveTo(EndPlot)
 			break
@@ -89,9 +89,9 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 		end
 
 		PreviousPos = character.PrimaryPart.Position
-		
+
 		wait(StepCooldown)
-		
+
 	end
 end
 
@@ -129,7 +129,7 @@ function CreateFrame(x,y,xsize,ysize, Name)
 	Frame.Parent = ScreenGui
 	Frame.Position = UDim2.new(x,0,y,0)
 	Frame.AnchorPoint = Vector2.new(0.5,0.5)
-	
+
 	return Frame
 end
 
@@ -142,7 +142,7 @@ function CreateScrollingFrame(x,y,xsize,ysize, Name)
 	Frame.Position = UDim2.new(x,0,y,0)
 	Frame.AnchorPoint = Vector2.new(0.5,0.5)
 	Frame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-	
+
 	return Frame
 end
 
@@ -178,7 +178,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	RemoveButton.TextColor3 = Color3.new(1, 1, 1)
 	RemoveButton.Size = UDim2.new(0.05,0,1,0)
 	RemoveButton.Position = UDim2.new(0.05,0,0,0)
-	
+
 	return Frame
 end
 
@@ -292,18 +292,18 @@ end)
 --GetWorkspace
 function Refresh()
 	BrowserInnerFrame.CanvasPosition = Vector2.new(0,0)
-	
+
 	BrowserBrowsingLabel.Text = Selection.Name
-	
+
 	for i,v in pairs(BrowserInnerFrame:GetChildren()) do
 		if v:IsA("TextButton") or v:IsA("TextLabel") then
 			v:Destroy()
 		end
 	end
-	
+
 	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"1Return","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
 	ReturnButton.Parent = BrowserInnerFrame
-	
+
 	ReturnButton.MouseButton1Click:Connect(function()
 		if Selection ~= game then 
 			Selection = Selection.Parent
@@ -312,17 +312,17 @@ function Refresh()
 			BrowserFrame.Visible = false
 		end
 	end)
-	
-	
+
+
 	if Selection:IsA("ObjectValue") or Selection:IsA("IntValue") or Selection:IsA("StringValue") then
 		local ValueFrame = CreateTextLabel(0,0,0.9,0.1,"2Value","Value: "..Selection.Value,Color3.new(0, 0.235294, 1),Color3.new(1, 1, 1))
 		ValueFrame.Parent = BrowserInnerFrame
 	end
-	
+
 	for i,v in pairs(Selection:GetChildren())do
 		local Button = CreateTextButton(0,0,0.9,0.1,v.Name,v.Name.. " => "..v.ClassName,Color3.new(1, 1, 1),Color3.new(0, 0, 0))
 		Button.Parent = BrowserInnerFrame
-		
+
 		Button.MouseButton1Click:Connect(function()
 			Button.BackgroundColor3 = Color3.new(0.67451, 0.67451, 0.67451)
 			Selection = v
@@ -350,7 +350,7 @@ end)
 --AutoBuy
 
 AutoBuyButton.MouseButton1Click:Connect(function()
-	
+
 	if PlayerTycoon == nil then
 		for i,v in pairs(PlayerTycoons:GetChildren()) do
 			if v.TycoonVals.Owner.Value == Player then
@@ -359,51 +359,51 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 			end
 		end
 	end
-	
+
 	AutoBuy = not AutoBuy
 	if AutoBuy then
 		AutoBuyButton.BackgroundColor3 = Color3.new(0, 1, 0)
 	else
 		AutoBuyButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
-	
+
 	while AutoBuy do
 
 		wait(.25)
-		
+
 		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
 			wait(0.2)
 			if AutoBuy == false then
 				break
 			end
-			
+
 			if CrateFound ~= true and AutoBuy then
 				local Fnd = false
-			
+
 				if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
 					v = PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")
 				end
 				if PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")	~= nil then
 					v = PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")
 				end
-				
+
 				if IsPartOfTable(ButtonsBlacklist,v.Name) then
-					
+
 				elseif v.Button.Color.R > v.Button.Color.G then
 					Fnd = true
-					
+
 					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
 						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
 					else
 						GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 					end
-					
+
 				else
 					Fnd = true
 					GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
-					
+
 				end
-				
+
 				if Fnd == false then
 					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
 						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
@@ -412,12 +412,12 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					end
 				end
 			end
-			
-			
-			
+
+
+
 		end
 	end
-	
+
 end)
 
 --Auto Collect
@@ -449,7 +449,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 				GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 			end
 		end
-		
+
 	end
 
 end)
@@ -466,53 +466,53 @@ AutoRebirthButton.MouseButton1Click:Connect(function()
 	end
 
 	while AutoRebirth do
-		
+
 		game:GetService("ReplicatedStorage").LocalRebirth:FireServer()
 		wait(10)
-		
+
 	end
 end)
 
 -- Auto Crate
 
 AutoCrateButton.MouseButton1Click:Connect(function()
-	
+
 	AutoCrate = not AutoCrate
 	if AutoCrate then
 		AutoCrateButton.BackgroundColor3 = Color3.new(0, 1, 0)
 	else
 		AutoCrateButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
-	
+
 	while AutoCrate do
 		if CrateFound then
-			
+
 			GoToPoint(character.PrimaryPart.Position,CratePos.Position + Vector3.new(0,20,0),40,0.1)
-				
+
 			wait(35)
 
 			CrateFound = false
 		else
 			for i,v in pairs(workspace:GetChildren())do
 				if v.Name == "Crate" and v:FindFirstChild("Main") ~= nil and CratePos ~= v.Main then
-					
+
 					CrateFound = true
 					CratePos = v.Main
 				end
 			end
 			wait(5)
 		end
-		
+
 		wait(10)
 	end
-	
+
 end)
 -- Anti Afk
 
 AntiAfkButton.MouseButton1Click:Connect(function()
 
 	AntiAfk = not AntiAfk
-	
+
 	if AntiAfk then
 		AntiAfkButton.BackgroundColor3 = Color3.new(0, 1, 0)
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/KazeOnTop/Rice-Anti-Afk/main/Wind", true))()
@@ -523,41 +523,41 @@ AntiAfkButton.MouseButton1Click:Connect(function()
 end)
 
 -- Aimbot
- AimbotButton.MouseButton1Click:Connect(function()
-	
+AimbotButton.MouseButton1Click:Connect(function()
+
 	Aimbot = not Aimbot
 	if Aimbot then
 		AimbotButton.BackgroundColor3 = Color3.new(0, 1, 0)
 	else
 		AimbotButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
-		
+
 	while Aimbot do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
-			
+
 		for i,v in pairs(Parts) do
 			if v == nil or v.Parent == nil then
- 				break		
+				break		
 			end
 			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
-					
+
 				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Character" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
 					while v.Parent ~= nil and vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						if v.Parent ~= nil and v.Parent:FindFirstChild("Head") ~= nil then
 							workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
 							wait(.0125)
 						end
-						
+
 					end
 				end
-				
+
 			end
-			
+
 		end
- 		wait(0.5)
+		wait(0.5)
 	end
-	
+
 end)
 
 --Auto Stab
@@ -578,33 +578,33 @@ AutoStabButton.MouseButton1Click:Connect(function()
 
 	while AutoStab do
 		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
-			
+
 		for i,v in pairs(Parts) do
 			if v == nil or v.Parent == nil then
- 				break		
+				break		
 			end
 			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
 				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
-					
+
 				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
-						
+
 					while v.Parent ~= nil and vHumanoid.Health > 0 and AutoStab and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
 						if (v.Parent.PrimaryPart.Position-character.PrimaryPart.Position).Magnitude > 4 then
 							GoToPoint(character.PrimaryPart.Position,v.Parent.PrimaryPart.Position + Vector3.new(2,0,2),40,0.1)
 						end
-						
+
 						Knife.Parent = character
 						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
 						Knife:Activate()
 						wait(0.33)
 					end
-						
+
 				end
-				
+
 			end
-			
+
 		end
- 		wait(0.5)
+		wait(0.5)
 	end
 end)
 --Auto Farm Event
@@ -638,36 +638,36 @@ end)
 
 GetContextActionButton.MouseButton1Click:Connect(function()
 
-	for i,v in pairs(ContextActionService:GetAllBoundActionInfo) do
+	for i,v in pairs(ContextActionService:GetAllBoundActionInfo()) do
 		print(i, v.inputTypes)
 	end
-		
+
 end)
 -- Misc
 
 Mouse.Button1Up:Connect(function()
 	if Mouse.Target == nil then
- 		return
+		return
 	end
 
 	if Mouse.Target.Parent == nil then
 		return
 	end
-	
+
 	if BrowserFrame.Visible == true then
 		return
 	end
-	
+
 	if MenuFrame.Visible == true then
 		return
 	end
-	
+
 	if ClickResearsh == false then
 		return
 	end
-	
+
 	Selection = Mouse.Target.Parent
-	
+
 	BrowserFrame.Visible = true
 	Refresh()
 end)
