@@ -476,10 +476,9 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 			wait(35)
 
 			CrateFound = false
-			CratePos = nil
 		else
 			for i,v in pairs(workspace:GetChildren())do
-				if v.Name == "Crate" and v:FindFirstChild("Main") ~= nil then
+				if v.Name == "Crate" and v:FindFirstChild("Main") ~= nil and CratePos ~= v.Main then
 					
 					CrateFound = true
 					CratePos = v.Main
