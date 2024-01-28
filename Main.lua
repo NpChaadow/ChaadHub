@@ -80,7 +80,7 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 
 		character:MoveTo(character.PrimaryPart.Position + Direction*NewDist)
 
-		if (PreviousPos-character.PrimaryPart.Position).Magnitude < Distance/4) then
+		if (PreviousPos-character.PrimaryPart.Position).Magnitude < Distance/4 then
 			NewDist = NewDist+10
 		else
 			NewDist = Distance
