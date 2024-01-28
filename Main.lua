@@ -209,7 +209,7 @@ end
 local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
 MenuFrame.Parent = ScreenGui
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.6a",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
+local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.0.6b",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
 
 local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
@@ -250,7 +250,7 @@ AimbotButton.Parent = MenuFrame
 local AutoStabButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoStabButton.Parent = MenuFrame
 
-local AutoFarmEventButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoFarmEventButton", "Auto farm event",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local AutoFarmEventButton = CreateTextButton(0.65,.25,0.1,0.075,"AutoFarmEventButton", "Auto farm event",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoFarmEventButton.Parent = MenuFrame
 
 local BrowserUIList = Instance.new("UIListLayout")
@@ -603,8 +603,8 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 
 	while AutoFarmEvent do
 		for i,v in pairs(EventFolder:GetChildren()) do
-			if v ~= nil and v:FindFirstChild("Hitbox") ~= nil and v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil then
-				while v.Hitbox.FindFirstChild("ProximityPrompt") ~= nil do
+			if v ~= nil and v:FindFirstChild("Hitbox") ~= nil and v.Hitbox:FindFirstChild("ProximityPrompt") ~= nil then
+				while v.Hitbox:FindFirstChild("ProximityPrompt") ~= nil do
 					if (v.Hitbox.Position-character.PrimaryPart.Position).Magnitude > 10 then
 						GoToPoint(character.PrimaryPart.Position,v.Hitbox.Position + Vector3.new(0,5,0),30,0.1)
 					end
