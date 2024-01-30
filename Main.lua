@@ -49,11 +49,11 @@ local AutoCrate = false
 local CrateFound = false
 local CratePos
 
-local PlayerTycoons = game.Workspace.PlayerTycoons
+local PlayerTycoons = game.Workspace:FindFirstChild("PlayerTycoons")
 local PlayerTycoon = nil
 local TycoonPos
 
-local EventFolder = workspace.CurrentEventCollectables
+local EventFolder = workspace:FindFirstChild("CurrentEventCollectables")
 
 local dragging
 local dragInput
@@ -154,14 +154,19 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	Frame.Parent = ScreenGui
 	Frame.Position = UDim2.new(x,0,y,0)
 	Frame.AnchorPoint = Vector2.new(0.5,0.5)
-
+	
+	
+	
 	local TopBar = Instance.new("Frame")
-	TopBar.Position = UDim2.new(0.5,0,0,0)
+	TopBar.Position = UDim2.new(0.5,0,0.0125,0)
 	TopBar.Size = UDim2.new(1,0,0.05,0)
 	TopBar.Name = "TopBar"
 	TopBar.Parent = Frame
 	TopBar.AnchorPoint = Vector2.new(0.5,0)
 	TopBar.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
+	TopBar.BorderSizePixel = 0
+	TopBar.BackgroundTransparency = 1
+	
 
 	local ReduceButton = Instance.new("TextButton")
 	ReduceButton.Parent = TopBar
@@ -169,7 +174,8 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	ReduceButton.Name = "ReduceButton"
 	ReduceButton.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
 	ReduceButton.Size = UDim2.new(0.05,0,1,0)
-
+	ReduceButton.Position = UDim2.new(0.05,0,0,0,0)
+	
 	local RemoveButton = Instance.new("TextButton")
 	RemoveButton.Parent = TopBar
 	RemoveButton.Text = "X"
@@ -177,7 +183,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	RemoveButton.BackgroundColor3 = Color3.new(1, 0, 0.0156863)
 	RemoveButton.TextColor3 = Color3.new(1, 1, 1)
 	RemoveButton.Size = UDim2.new(0.05,0,1,0)
-	RemoveButton.Position = UDim2.new(0.05,0,0,0)
+	RemoveButton.Position = UDim2.new(0.10,0,0,0)
 
 	return Frame
 end
@@ -217,8 +223,22 @@ function IsPartOfTable(Table, Check)
 	return false
 end
 
-local MenuFrame = CreateTabFrame(.5,.5, .7,.8,"Menu")
-MenuFrame.Parent = ScreenGui
+local MenuFrameOutline = CreateFrame(.5,.5, .7,.8,"Menu")
+MenuFrameOutline.Parent = ScreenGui
+MenuFrameOutline.BackgroundColor = BrickColor.new(0.08235294117647059, 0.6039215686274509,0.611764705882353)
+MenuFrameOutline.Visible = false
+
+local MenuFrameOutlineUICorner = Instance.new("UICorner")
+MenuFrameOutlineUICorner.Parent = MenuFrameOutline
+
+local MenuFrame = CreateTabFrame(0.5,0.5, 1,1,"MenuInside")
+MenuFrame.Parent = MenuFrameOutline
+MenuFrame.Size = UDim2.new(1,-12,1,-12)
+MenuFrame.BackgroundColor = BrickColor.new(0.043137254901960784,0.08627450980392157,0.17254901960784313)
+MenuFrame.Visible = true
+
+local MenuFrameUICorner = Instance.new("UICorner")
+MenuFrameUICorner.Parent = MenuFrame
 
 local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.1.0d",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
 MenuVersionLabel.Parent = MenuFrame.TopBar
@@ -272,7 +292,7 @@ BrowserUIList.Parent = BrowserInnerFrame
 BrowserUIList.FillDirection = Enum.FillDirection.Vertical
 
 MenuFrame.TopBar.ReduceButton.MouseButton1Click:Connect(function()
-	MenuFrame.Visible = false
+	MenuFrameOutline.Visible = false
 end)
 
 MenuFrame.TopBar.RemoveButton.MouseButton1Click:Connect(function()
@@ -284,7 +304,7 @@ BrowserFrame.TopBar.ReduceButton.MouseButton1Click:Connect(function()
 end)
 
 ButtonFrame.MouseButton1Click:Connect(function()
-	MenuFrame.Visible = not MenuFrame.Visible
+	MenuFrameOutline.Visible = not MenuFrameOutline.Visible
 end)
 
 -- Button Functions
