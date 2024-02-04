@@ -19,20 +19,32 @@ local Mouse = Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 
 local ScreenGui = Instance.new('ScreenGui')
-ScreenGui.Parent = game.CoreGui
+ScreenGui.Parent = Player.PlayerGui
 
-local ButtonFrame = Instance.new("TextButton")
-ButtonFrame.Parent = ScreenGui
-ButtonFrame.Size = UDim2.new(0.1,0,0.1,0)
+local ButtonFrameOutline = Instance.new("Frame")
+ButtonFrameOutline.Parent = ScreenGui
+ButtonFrameOutline.Size = UDim2.new(0.125,0,0.125,0)
+ButtonFrameOutline.SizeConstraint = Enum.SizeConstraint.RelativeYY
+ButtonFrameOutline.AnchorPoint = Vector2.new(0.5,0.5)
+ButtonFrameOutline.BackgroundColor3 = Color3.new(1, 0, 0.384314)
+ButtonFrameOutline.Position = UDim2.new(0.1,0,0.1,0)
+
+local MainButtonOutlineUICorner = Instance.new("UICorner")
+MainButtonOutlineUICorner.Parent = ButtonFrameOutline
+MainButtonOutlineUICorner.CornerRadius = UDim.new(0.3,0)
+
+
+local ButtonFrame = Instance.new("ImageButton")
+ButtonFrame.Parent = ButtonFrameOutline
+ButtonFrame.Size = UDim2.new(1,-4,1,-4)
 ButtonFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
 ButtonFrame.AnchorPoint = Vector2.new(0.5,0.5)
-ButtonFrame.Text = "Menu"
-ButtonFrame.BorderSizePixel = 0
-ButtonFrame.BackgroundColor3 = Color3.new(0.537255, 0.270588, 1)
-ButtonFrame.Position = UDim2.new(0.1,0,0.1,0)
+ButtonFrame.Image = "rbxassetid://16185622377"
+ButtonFrame.Position = UDim2.new(0.5,0,0.5,0)
 
 local MainButtonUICorner = Instance.new("UICorner")
 MainButtonUICorner.Parent = ButtonFrame
+MainButtonUICorner.CornerRadius = UDim.new(0.3,0)
 
 local gui = ButtonFrame
 
@@ -64,10 +76,10 @@ local Waypoints
 
 local function update(input)
 	local delta = input.Position - dragStart
-	gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	gui.Parent.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
-local function fireproximityprompt(Obj, Amount, Skip) if Obj.ClassName == "ProximityPrompt" then Amount = Amount or 1 local PromptTime = Obj.HoldDuration if Skip then Obj.HoldDuration = 0 end for i = 1, Amount do Obj:InputHoldBegin() if not Skip then wait(Obj.HoldDuration) end Obj:InputHoldEnd() end Obj.HoldDuration = PromptTime else error("userdata<ProximityPrompt> expected") end end
+function fireproximityprompt(Obj, Amount, Skip) if Obj.ClassName == "ProximityPrompt" then Amount = Amount or 1 local PromptTime = Obj.HoldDuration if Skip then Obj.HoldDuration = 0 end for i = 1, Amount do Obj:InputHoldBegin() if not Skip then wait(Obj.HoldDuration) end Obj:InputHoldEnd() end Obj.HoldDuration = PromptTime else error("userdata<ProximityPrompt> expected") end end
 
 function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
 	local NewDist = Distance
@@ -99,7 +111,7 @@ gui.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		dragging = true
 		dragStart = input.Position
-		startPos = gui.Position
+		startPos = gui.Parent.Position
 
 		input.Changed:Connect(function()
 			if input.UserInputState == Enum.UserInputState.End then
@@ -121,12 +133,44 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
+function Outline(BorderWidth:number,BorderRadius:number,BorderColor:BrickColor,Frame:Frame, Name:string)
+	local OutlineFrame = Instance.new("Frame")
+	
+	OutlineFrame.Position = Frame.Position
+	OutlineFrame.Size = Frame.Size +UDim2.new(0,BorderWidth,0,BorderWidth)
+	OutlineFrame.Parent = Frame.Parent
+	OutlineFrame.BackgroundColor = BorderColor
+	OutlineFrame.AnchorPoint = Frame.AnchorPoint
+	OutlineFrame.Name = Name
+	OutlineFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	
+	Frame.Parent = OutlineFrame
+	Frame.Position = UDim2.new(0.5,0,0.5,0)
+	Frame.Size = UDim2.new(1,-BorderWidth,1,-BorderWidth)
+	
+	Corner(OutlineFrame,UDim.new(BorderRadius,0) )
+	Corner(Frame, UDim.new(BorderRadius,0))
+end
+
+function Gradient(Parent:Instance,ColorSeq:ColorSequence, Rotation:number)
+	local Gradient = Instance.new("UIGradient")
+	
+	Gradient.Color = ColorSeq
+	Gradient.Parent = Parent
+	Gradient.Rotation = Rotation
+end
+
+function Corner(Parent:Instance, Radius:UDim)
+	local Corner = Instance.new("UICorner")
+
+	Corner.CornerRadius = Radius
+	Corner.Parent = Parent
+end
+
 function CreateFrame(x,y,xsize,ysize, Name)
 	local Frame = Instance.new("Frame")
 	Frame.Name = Name
-	Frame.Visible = true
 	Frame.Size = UDim2.new(xsize,0,ysize,0)
-	Frame.Parent = ScreenGui
 	Frame.Position = UDim2.new(x,0,y,0)
 	Frame.AnchorPoint = Vector2.new(0.5,0.5)
 
@@ -147,43 +191,55 @@ function CreateScrollingFrame(x,y,xsize,ysize, Name)
 end
 
 function CreateTabFrame(x,y,xsize,ysize, Name)
-	local Frame = Instance.new("Frame")
-	Frame.Name = Name
-	Frame.Visible = false
-	Frame.Size = UDim2.new(xsize,0,ysize,0)
+	
+	local Frame = CreateFrame(x,y,xsize,ysize,Name)
 	Frame.Parent = ScreenGui
-	Frame.Position = UDim2.new(x,0,y,0)
-	Frame.AnchorPoint = Vector2.new(0.5,0.5)
 	
+	Gradient(Frame,ColorSequence.new({
+		ColorSequenceKeypoint.new(0,Color3.new(0.705882, 0, 0)),
+		ColorSequenceKeypoint.new(1,Color3.new(0.384314, 0, 0))
+	}),90)
 	
+	local SideBar = CreateScrollingFrame(0,0.5,0.15,1,"SideBar")
+	SideBar.Parent = Frame
+	SideBar.AnchorPoint = Vector2.new(0,0.5)
+	SideBar.BackgroundTransparency = 0.5
+	SideBar.BorderSizePixel = 0
+	SideBar.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
+	SideBar.ScrollBarThickness = 5
+	SideBar.BackgroundColor3 = Color3.new(0.333333, 0, 0)
 	
-	local TopBar = Instance.new("Frame")
-	TopBar.Position = UDim2.new(0.5,0,0.0125,0)
-	TopBar.Size = UDim2.new(1,0,0.05,0)
-	TopBar.Name = "TopBar"
-	TopBar.Parent = Frame
-	TopBar.AnchorPoint = Vector2.new(0.5,0)
-	TopBar.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
-	TopBar.BorderSizePixel = 0
-	TopBar.BackgroundTransparency = 1
+	Corner(SideBar,UDim.new(0.0125,0))
 	
-
-	local ReduceButton = Instance.new("TextButton")
-	ReduceButton.Parent = TopBar
-	ReduceButton.Text = "-"
-	ReduceButton.Name = "ReduceButton"
-	ReduceButton.BackgroundColor3 = Color3.new(0.211765, 0.211765, 0.211765)
-	ReduceButton.Size = UDim2.new(0.05,0,1,0)
-	ReduceButton.Position = UDim2.new(0.05,0,0,0,0)
+	local ContentFrame = CreateFrame(0.575,0.575,0.85,0.85,"ContentFrame")
+	ContentFrame.Parent = Frame
+	ContentFrame.BackgroundTransparency = 1
+	ContentFrame.BorderSizePixel = 0
 	
-	local RemoveButton = Instance.new("TextButton")
-	RemoveButton.Parent = TopBar
-	RemoveButton.Text = "X"
-	RemoveButton.Name = "RemoveButton"
-	RemoveButton.BackgroundColor3 = Color3.new(1, 0, 0.0156863)
-	RemoveButton.TextColor3 = Color3.new(1, 1, 1)
-	RemoveButton.Size = UDim2.new(0.05,0,1,0)
-	RemoveButton.Position = UDim2.new(0.10,0,0,0)
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0a",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+	HubLabel.BackgroundTransparency = 0.9
+	HubLabel.Parent = Frame
+	
+	Corner(HubLabel, UDim.new(0.5,0))
+	
+	local ActionsButtonsContainer = CreateFrame(0.9,0.065,0.15,0.0804,"ActionsButtonsContainer")
+	ActionsButtonsContainer.Parent = Frame
+	ActionsButtonsContainer.BorderSizePixel = 0
+	ActionsButtonsContainer.BackgroundTransparency = 1
+	
+	local ReduceButton = CreateTextButton(0.5,0,1,1,"ReduceButton","-",Color3.new(0.435294, 0.435294, 0.435294),Color3.new(1, 1, 1))
+	ReduceButton.Parent = ActionsButtonsContainer
+	ReduceButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	ReduceButton.AnchorPoint = Vector2.new(0,0)
+	
+	Corner(ReduceButton,UDim.new(0.25,0))
+	
+	local RemoveButton = CreateTextButton(0,0,1,1,"RemoveButton","X",Color3.new(0.541176, 0, 0.00784314),Color3.new(1, 1, 1))
+	RemoveButton.Parent = ActionsButtonsContainer
+	RemoveButton.AnchorPoint = Vector2.new(0,0)
+	RemoveButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
+	
+	Corner(RemoveButton,UDim.new(0.25,0))
 
 	return Frame
 end
@@ -201,6 +257,17 @@ function CreateTextButton(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	return Button
 end
 
+function CreateImageButton(x,y,xsize,ysize,name,ImageId,backgroundColor)
+	local Button = Instance.new("ImageButton")
+	Button.Name = name
+	Button.Image = ImageId
+	Button.Position = UDim2.new(x,0,y,0)
+	Button.Size = UDim2.new(xsize,0,ysize,0)
+	Button.AnchorPoint = Vector2.new(0.5,0.5)
+	Button.BackgroundColor3 = backgroundColor
+	return Button
+end
+
 function CreateTextLabel(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	local Button = Instance.new("TextLabel")
 	Button.Name = name
@@ -211,6 +278,9 @@ function CreateTextLabel(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	Button.TextColor3 = textColor
 	Button.BackgroundColor3 = backgroundColor
 	Button.TextScaled = true
+	Button.Font = Enum.Font.FredokaOne
+	Button.FontFace.Bold = true
+	
 	return Button
 end
 
@@ -223,88 +293,193 @@ function IsPartOfTable(Table, Check)
 	return false
 end
 
-local MenuFrameOutline = CreateFrame(.5,.5, .7,.8,"Menu")
-MenuFrameOutline.Parent = ScreenGui
-MenuFrameOutline.BackgroundColor = BrickColor.new(0.08235294117647059, 0.6039215686274509,0.611764705882353)
-MenuFrameOutline.Visible = false
+local MenuFrame = CreateTabFrame(0.5,0.5, 1.1,0.7,"MenuInside")
+Outline(8,0.0125,BrickColor.new(Color3.new(1, 0, 0.235294)),MenuFrame, "MenuFrameOutline")
 
-local MenuFrameOutlineUICorner = Instance.new("UICorner")
-MenuFrameOutlineUICorner.Parent = MenuFrameOutline
+local ContentFrame:Frame = MenuFrame.ContentFrame
 
-local MenuFrame = CreateTabFrame(0.5,0.5, 1,1,"MenuInside")
-MenuFrame.Parent = MenuFrameOutline
-MenuFrame.Size = UDim2.new(1,-12,1,-12)
-MenuFrame.BackgroundColor = BrickColor.new(0.043137254901960784,0.08627450980392157,0.17254901960784313)
-MenuFrame.Visible = true
+function CloseAllFrameInMenuContent()
+	for i,v in pairs(ContentFrame:GetChildren())do
+		if v:IsA("Frame") or v:IsA("ScrollingFrame") then
+			v.Visible = false
+		end
+	end
+end
 
-local MenuFrameUICorner = Instance.new("UICorner")
-MenuFrameUICorner.Parent = MenuFrame
+local ToolsButton = CreateImageButton(.5,0.1,0.5,0.5,"ToolsButton","rbxassetid://16244450805",Color3.new(0.4, 0, 0.00784314))
+ToolsButton.Parent = MenuFrame.SideBar
 
-local MenuVersionLabel = CreateTextLabel(.6,.5,.5,1,"MenuVersionLabel","V0.1.0d",Color3.new(0.384314, 0.384314, 0.384314),Color3.new(1, 1, 1))
-MenuVersionLabel.Parent = MenuFrame.TopBar
+Outline(6,0.25,BrickColor.new(Color3.new(1, 0, 0.0156863)),ToolsButton,"ToolsButtonOutline")
+ToolsButton.Parent.SizeConstraint = Enum.SizeConstraint.RelativeXX
+ToolsButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
 
-local BrowserFrame = CreateTabFrame(.5,.5,.7,.8,"BrowserFrame")
+local FarmButton = CreateImageButton(.5,0.3,0.5,0.5,"FarmButton","rbxassetid://16244570101",Color3.new(0.4, 0, 0.00784314))
+FarmButton.Parent = MenuFrame.SideBar
 
-BrowserFrame.Parent = ScreenGui
-BrowserFrame.TopBar:WaitForChild("RemoveButton"):Destroy()
+Outline(6,0.25,BrickColor.new(Color3.new(1, 0, 0.0156863)),FarmButton,"FarmButtonOutline")
+FarmButton.Parent.SizeConstraint = Enum.SizeConstraint.RelativeXX
+FarmButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
 
-local BrowserBrowsingLabel = CreateTextLabel(0.5,0.09,1,0.075, "3BrowserBrowsingLabel", "Game", Color3.new(0.67451, 0.67451, 0.67451), Color3.new(0, 0, 0))
+local WorldButton = CreateImageButton(.5,0.5,0.5,0.5,"WorldButton","rbxassetid://16244610946",Color3.new(0.4, 0, 0.00784314))
+WorldButton.Parent = MenuFrame.SideBar
+
+Outline(6,0.25,BrickColor.new(Color3.new(1, 0, 0.0156863)),WorldButton,"WorldButtonOutline")
+WorldButton.Parent.SizeConstraint = Enum.SizeConstraint.RelativeXX
+WorldButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
+
+local PlayerButton = CreateImageButton(.5,0.7,0.5,0.5,"PlayerButton","rbxassetid://16244692448",Color3.new(0.4, 0, 0.00784314))
+PlayerButton.Parent = MenuFrame.SideBar
+
+Outline(6,0.25,BrickColor.new(Color3.new(1, 0, 0.0156863)),PlayerButton,"PlayerButtonOutline")
+PlayerButton.Parent.SizeConstraint = Enum.SizeConstraint.RelativeXX
+PlayerButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
+
+local CombatButton = CreateImageButton(.5,0.9,0.5,0.5,"CombatButton","rbxassetid://16244690064",Color3.new(0.4, 0, 0.00784314))
+CombatButton.Parent = MenuFrame.SideBar
+
+Outline(6,0.25,BrickColor.new(Color3.new(1, 0, 0.0156863)),CombatButton,"CombatButtonOutline")
+CombatButton.Parent.SizeConstraint = Enum.SizeConstraint.RelativeXX
+CombatButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
+
+local BrowserFrame = CreateFrame(0.5,0.5,1,1,"BrowserFrame")
+BrowserFrame.Parent = ContentFrame
+BrowserFrame.Visible = false
+BrowserFrame.BorderSizePixel = 0
+BrowserFrame.BackgroundTransparency = 1
+
+local ToolsFrame = CreateScrollingFrame(.5,.5,1,1,"ToolsFrame")
+ToolsFrame.Parent = ContentFrame
+ToolsFrame.BackgroundTransparency = 1
+ToolsFrame.Visible = false
+ToolsFrame.BorderSizePixel = 0
+
+local FarmFrame = CreateScrollingFrame(.5,.5,1,1,"FarmFrame")
+FarmFrame.Parent = ContentFrame
+FarmFrame.BackgroundTransparency = 1
+FarmFrame.Visible = false
+FarmFrame.BorderSizePixel = 0
+
+local WorldFrame = CreateScrollingFrame(.5,.5,1,1,"WorldFrame")
+WorldFrame.Parent = ContentFrame
+WorldFrame.BackgroundTransparency = 1
+WorldFrame.Visible = false
+WorldFrame.BorderSizePixel = 0
+
+local PlayerFrame = CreateScrollingFrame(.5,.5,1,1,"PlayerFrame")
+PlayerFrame.Parent = ContentFrame
+PlayerFrame.BackgroundTransparency = 1
+PlayerFrame.Visible = false
+PlayerFrame.BorderSizePixel = 0
+
+local CombatFrame = CreateScrollingFrame(.5,.5,1,1,"CombatFrame")
+CombatFrame.Parent = ContentFrame
+CombatFrame.BackgroundTransparency = 1
+CombatFrame.Visible = false
+CombatFrame.BorderSizePixel = 0
+
+local BrowserBrowsingLabel = CreateTextLabel(0.5,0.09,1,0.075, "BrowserBrowsingLabel", "Game", Color3.new(0.67451, 0.67451, 0.67451), Color3.new(0, 0, 0))
 BrowserBrowsingLabel.Parent = BrowserFrame
+BrowserBrowsingLabel.BorderSizePixel = 0
+
+Corner(BrowserBrowsingLabel, UDim.new(0.125,0))
 
 local BrowserInnerFrame = CreateScrollingFrame(0.5,0.55, 1,0.85,"BrowserInnerFrame")
+BrowserInnerFrame.BackgroundColor3 = Color3.new(0.27451, 0, 0.00784314)
 BrowserInnerFrame.Parent = BrowserFrame
+BrowserInnerFrame.BorderSizePixel = 0
 
-local GetGameFilesButton = CreateTextButton(0.06,0.15,0.1,0.075,"GetGameFilesButton", "Get game files",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-GetGameFilesButton.Parent = MenuFrame
+-- Tools Buttons
 
-local ClickResearchButton = CreateTextButton(0.06,0.25,0.1,0.075,"ClickResearchButton", "Click to research",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-ClickResearchButton.Parent = MenuFrame
+local GetGameFilesButton = CreateTextButton(0.2,0.15,.4,0.125,"GetGameFilesButton", "Get game files",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+GetGameFilesButton.Parent = ToolsFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),GetGameFilesButton,"GetGameFilesButtonOutline")
 
-local AutoBuyButton = CreateTextButton(0.20,0.25,0.1,0.075,"AutoBuyButton", "Auto buy",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AutoBuyButton.Parent = MenuFrame
+local ClickResearchButton = CreateTextButton(0.2,0.3,.4,0.125,"ClickResearchButton", "Click to research",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+ClickResearchButton.Parent = ToolsFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),ClickResearchButton,"ClickResearchButtonOutline")
 
-local AutoCollectButton = CreateTextButton(0.20,0.15,0.1,0.075,"AutoCollectButton", "Auto collect",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AutoCollectButton.Parent = MenuFrame
+local AntiAfkButton = CreateTextButton(0.2,.45,.4,0.125,"AntiAfkButton", "Anti-Afk",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AntiAfkButton.Parent = ToolsFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AntiAfkButton,"AntiAfkButtonOutline")
 
-local AutoRebirthButton = CreateTextButton(0.35,0.15,0.1,0.075,"AutoRebirthButton", "Auto rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AutoRebirthButton.Parent = MenuFrame
+--Farm Buttons
 
-local AntiAfkButton = CreateTextButton(0.35,.25,0.1,0.075,"AntiAfkButton", "Anti-Afk",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AntiAfkButton.Parent = MenuFrame
+local AutoBuyButton = CreateTextButton(0.2,0.15,.4,0.125,"AutoBuyButton", "Auto buy",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoBuyButton.Parent = FarmFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoBuyButton,"AutoBuyButtonOutline")
 
-local AutoCrateButton = CreateTextButton(0.5,.15,0.1,0.075,"AutoCrateButton", "Auto crate",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AutoCrateButton.Parent = MenuFrame
+local AutoCollectButton = CreateTextButton(0.2,0.3,.4,0.125,"AutoCollectButton", "Auto collect",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoCollectButton.Parent = FarmFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoCollectButton,"AutoCollectButtonOutline")
 
-local AimbotButton = CreateTextButton(0.5,.25,0.1,0.075,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AimbotButton.Parent = MenuFrame
+local AutoRebirthButton = CreateTextButton(0.2,0.45,.4,0.125,"AutoRebirthButton", "Auto rebirth",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoRebirthButton.Parent = FarmFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoRebirthButton,"AutoRebirthButtonOutline")
 
-local AutoStabButton = CreateTextButton(0.65,.15,0.1,0.075,"AutoStabButton", "Auto stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AutoStabButton.Parent = MenuFrame
+-- World Buttons
 
-local AutoFarmEventButton = CreateTextButton(0.65,.25,0.1,0.075,"AutoFarmEventButton", "Auto farm event",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-AutoFarmEventButton.Parent = MenuFrame
+local AutoCrateButton = CreateTextButton(0.2,.15,.4,0.125,"AutoCrateButton", "Auto crate",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoCrateButton.Parent = WorldFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoCrateButton,"AutoCrateButtonOutline")
 
-local GetContextActionButton = CreateTextButton(0.80,.15,0.1,0.075,"GetContextActionButton", "Get context action",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
-GetContextActionButton.Parent = MenuFrame
+local AutoFarmEventButton = CreateTextButton(0.2,.30,.4,0.125,"AutoFarmEventButton", "Auto farm event",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoFarmEventButton.Parent = WorldFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoFarmEventButton,"AutoFarmEventButtonOutline")
+
+-- Combat Buttons
+
+local AimbotButton = CreateTextButton(0.2,.15,.4,0.125,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AimbotButton.Parent = CombatFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AimbotButton,"AimbotButtonOutline")
+
+local AutoStabButton = CreateTextButton(0.2,.3,.4,0.125,"AutoStabButton", "Auto stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+AutoStabButton.Parent = CombatFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoStabButton,"AutoStabButtonOutline")
+
 
 local BrowserUIList = Instance.new("UIListLayout")
 BrowserUIList.Parent = BrowserInnerFrame
 BrowserUIList.FillDirection = Enum.FillDirection.Vertical
+BrowserUIList.Padding = UDim.new(0.01,0)
+BrowserUIList.SortOrder = Enum.SortOrder.Name
 
-MenuFrame.TopBar.ReduceButton.MouseButton1Click:Connect(function()
-	MenuFrameOutline.Visible = false
+ToolsButton.MouseButton1Click:Connect(function()
+	CloseAllFrameInMenuContent()
+	ToolsFrame.Visible = true
 end)
 
-MenuFrame.TopBar.RemoveButton.MouseButton1Click:Connect(function()
+FarmButton.MouseButton1Click:Connect(function()
+	CloseAllFrameInMenuContent()
+	FarmFrame.Visible = true
+end)
+
+WorldButton.MouseButton1Click:Connect(function()
+	CloseAllFrameInMenuContent()
+	WorldFrame.Visible = true
+end)
+
+PlayerButton.MouseButton1Click:Connect(function()
+	CloseAllFrameInMenuContent()
+	PlayerFrame.Visible = true
+end)
+
+CombatButton.MouseButton1Click:Connect(function()
+	CloseAllFrameInMenuContent()
+	CombatFrame.Visible = true
+end)
+
+
+
+MenuFrame.ActionsButtonsContainer.ReduceButton.MouseButton1Click:Connect(function()
+	MenuFrame.Parent.Visible = false
+end)
+
+MenuFrame.ActionsButtonsContainer.RemoveButton.MouseButton1Click:Connect(function()
 	ScreenGui:Destroy()
 end)
 
-BrowserFrame.TopBar.ReduceButton.MouseButton1Click:Connect(function()
-	BrowserFrame.Visible = false
-end)
-
 ButtonFrame.MouseButton1Click:Connect(function()
-	MenuFrameOutline.Visible = not MenuFrameOutline.Visible
+	MenuFrame.Parent.Visible = not MenuFrame.Parent.Visible
 end)
 
 -- Button Functions
@@ -316,20 +491,27 @@ function Refresh()
 	BrowserBrowsingLabel.Text = Selection.Name
 
 	for i,v in pairs(BrowserInnerFrame:GetChildren()) do
-		if v:IsA("TextButton") or v:IsA("TextLabel") then
+		if v:IsA("TextButton") or v:IsA("TextLabel") or v:IsA("Frame") then
 			v:Destroy()
 		end
 	end
 
-	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"1Return","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
+	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"00000000Return","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
 	ReturnButton.Parent = BrowserInnerFrame
-
+	Corner(ReturnButton,UDim.new(0.125,0))
+	
+	local BottomFillers = CreateFrame(0,0,0.9,0.4,"ZZZZZZZZZZZZFiller")
+	BottomFillers.Parent = BrowserInnerFrame
+	BottomFillers.BackgroundTransparency = 1
+	Corner(BottomFillers,UDim.new(0.125,0))
+	
 	ReturnButton.MouseButton1Click:Connect(function()
 		if Selection ~= game then 
 			Selection = Selection.Parent
 			Refresh()
 		else
 			BrowserFrame.Visible = false
+			ToolsFrame.Visible = true
 		end
 	end)
 
@@ -340,11 +522,12 @@ function Refresh()
 	end
 
 	for i,v in pairs(Selection:GetChildren())do
-		local Button = CreateTextButton(0,0,0.9,0.1,v.Name,v.Name.. " => "..v.ClassName,Color3.new(1, 1, 1),Color3.new(0, 0, 0))
+		local Button = CreateTextButton(0,0,0.9,0.1,"A"..v.Name,v.Name.. " => "..v.ClassName,Color3.new(1, 0.607843, 0.615686),Color3.new(0, 0, 0))
 		Button.Parent = BrowserInnerFrame
-
+		Corner(Button,UDim.new(0.125,0))
+		
 		Button.MouseButton1Click:Connect(function()
-			Button.BackgroundColor3 = Color3.new(0.67451, 0.67451, 0.67451)
+			Button.BackgroundColor3 = Color3.new(0.407843, 0, 0.0117647)
 			Selection = v
 			Refresh()
 		end)
@@ -352,6 +535,7 @@ function Refresh()
 end
 
 GetGameFilesButton.MouseButton1Click:Connect(function()
+	CloseAllFrameInMenuContent()
 	BrowserFrame.Visible = true
 	Refresh()
 end)
@@ -654,15 +838,6 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Get Context Action
-
-GetContextActionButton.MouseButton1Click:Connect(function()
-
-	for i,v in pairs(ContextActionService:GetAllBoundActionInfo()) do
-		print(i, v.inputTypes)
-	end
-
-end)
 -- Misc
 
 Mouse.Button1Up:Connect(function()
