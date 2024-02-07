@@ -19,7 +19,7 @@ local Mouse = Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 
 local ScreenGui = Instance.new('ScreenGui')
-ScreenGui.Parent = game.CoreGui
+ScreenGui.Parent = Player.PlayerGui
 
 local ButtonFrameOutline = Instance.new("Frame")
 ButtonFrameOutline.Parent = ScreenGui
@@ -216,7 +216,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	ContentFrame.BackgroundTransparency = 1
 	ContentFrame.BorderSizePixel = 0
 	
-	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0a",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0b",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
 	HubLabel.BackgroundTransparency = 0.9
 	HubLabel.Parent = Frame
 	
@@ -851,18 +851,17 @@ function LookInFiles(Object:Instance)
 	end	
 
 	for i,v in pairs(Object:GetChildren())do
-		wait(0.0001)
+		wait(.000001)
 		if #v:GetChildren() > 0 then
 
 			LookInFiles(v)
 
-		elseif v:isA("RemoteEvent") then
+		elseif v:isA("RemoteEvent") or v:IsA("RemoteFunction") or v:IsA("BindableEvent") or v:IsA("BindableFunction") or v:IsA("UnreliableRemoteEvent") then
 
 			local P = v.Parent
 			local Str = v.Name
 
 			while P ~= nil do
-				wait(0.0001)
 				Str = P.Name.. "/"..Str
 				P = P.Parent
 			end
