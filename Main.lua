@@ -851,7 +851,7 @@ function LookInFiles(Object:Instance)
 	end	
 
 	for i,v in pairs(Object:GetChildren())do
-		wait(.001)
+		wait(0.0001)
 		if #v:GetChildren() > 0 then
 
 			LookInFiles(v)
@@ -862,7 +862,7 @@ function LookInFiles(Object:Instance)
 			local Str = v.Name
 
 			while P ~= nil do
-				wait(.001)
+				wait(0.0001)
 				Str = P.Name.. "/"..Str
 				P = P.Parent
 			end
