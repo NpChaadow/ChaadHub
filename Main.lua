@@ -19,7 +19,7 @@ local Mouse = Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 
 local ScreenGui = Instance.new('ScreenGui')
-ScreenGui.Parent = Player.PlayerGui
+ScreenGui.Parent = game.CoreGui
 
 local ButtonFrameOutline = Instance.new("Frame")
 ButtonFrameOutline.Parent = ScreenGui
@@ -401,6 +401,10 @@ Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),ClickResearchButton,
 local AntiAfkButton = CreateTextButton(0.2,.45,.4,0.125,"AntiAfkButton", "Anti-Afk",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AntiAfkButton.Parent = ToolsFrame
 Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AntiAfkButton,"AntiAfkButtonOutline")
+
+local GetRemoteEventsButton = CreateTextButton(0.2,.6,.4,.125,"GetRemoteEventsButton", "Get remote events",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+GetRemoteEventsButton.Parent = ToolsFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),GetRemoteEventsButton,"GetRemoteEventsButtonOutline")
 
 --Farm Buttons
 
@@ -836,6 +840,42 @@ AutoFarmEventButton.MouseButton1Click:Connect(function()
 		end
 		wait(1)
 	end
+end)
+
+--Get Remote Event
+
+function LookInFiles(Object:Instance)
+
+	if #Object:GetChildren() <= 0 then
+		return
+	end	
+
+	for i,v in pairs(Object:GetChildren())do
+
+		if #v:GetChildren() > 0 then
+
+			LookInFiles(v)
+
+		elseif v:isA("RemoteEvent") then
+
+			local P = v.Parent
+			local Str = v.Name
+
+			while P ~= nil do
+				Str = P.Name.. "/"..Str
+				P = P.Parent
+			end
+
+			print(Str)
+
+		end
+
+	end
+
+end
+
+GetRemoteEventsButton.MouseButton1Click:Connect(function()
+	LookInFiles(game)
 end)
 
 -- Misc
