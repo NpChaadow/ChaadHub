@@ -852,7 +852,7 @@ function LookInFiles(Object:Instance)
 	end	
 
 	for i,v in pairs(Object:GetChildren())do
-		wait(.00000001)
+		wait(.00000000001)
 		if #v:GetChildren() > 0 then
 
 			LookInFiles(v)
