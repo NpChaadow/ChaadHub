@@ -872,13 +872,12 @@ function LookInFiles(Object:Instance)
 		end
 
 	end
-	
-	print("End")
 
 end
 
 GetRemoteEventsButton.MouseButton1Click:Connect(function()
 	LookInFiles(game)
+	print("End")
 end)
 
 -- Misc
