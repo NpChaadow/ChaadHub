@@ -855,13 +855,13 @@ function LookInFiles(Object:Instance)
 		return
 	end	
 
-  if Iterations >= 1000 then
+	for i,v in pairs(Object:GetChildren())do
+  Iterations += 1 
+ 
+  if Iterations >= 500 then
    wait(0.03)
    Iterations= 0
   end
-
-	for i,v in pairs(Object:GetChildren())do
-  Iterations += 1 
  
 		if #v:GetChildren() > 0 then
 
