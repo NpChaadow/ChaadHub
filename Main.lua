@@ -218,7 +218,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	ContentFrame.BackgroundTransparency = 1
 	ContentFrame.BorderSizePixel = 0
 	
-	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0e",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0f",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
 	HubLabel.BackgroundTransparency = 0.9
 	HubLabel.Parent = Frame
 	
@@ -851,17 +851,16 @@ function LookInFiles(Object:Instance)
 
 
 	if #Object:GetChildren() <= 0 then
-		print("a")
 		return
 	end	
 
 	for i,v in pairs(Object:GetChildren())do
-  Iterations += 1 
- 
-  if Iterations >= 500 then
-   wait(0.03)
-   Iterations= 0
-  end
+		Iterations += 1 
+ 		print(Iterations)
+  		if Iterations >= 100 then
+   			wait(0.03)
+   			Iterations= 0
+  		end
  
 		if #v:GetChildren() > 0 then
 
