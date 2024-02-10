@@ -856,8 +856,8 @@ function LookInFiles(Object:Instance)
 
 	for i,v in pairs(Object:GetChildren())do
 		Iterations += 1 
-  		if Iterations >= 100 then
-   			wait(0.03)
+  		if Iterations >= 50 then
+   			wait(0.1)
    			Iterations= 0
   		end
  
