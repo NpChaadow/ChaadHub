@@ -76,6 +76,46 @@ local startPos
 
 local Waypoints
 
+function GetClosestTarget(Position:Vector3,Distance:number	)
+	
+	local Target = nil
+	local TargetPosition = nil
+	
+	local PartsInRadius = workspace:GetPartBoundsInRadius(Position,Distance)
+	
+	for i,v in pairs(PartsInRadius)do
+		
+		if v.Parent:FindFirstChildOfClass("Humanoid") ~= nil then
+			print("A")
+			local vHumanoid = v.Parent:FindFirstChildOfClass("Humanoid")
+			
+			if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
+				
+				if Target == nil then
+					
+					Target = v.Parent
+					TargetPosition = v.Parent.PrimaryPart.Position
+					
+				end
+				
+				
+				if (Position-v.Parent.PrimaryPart.Position).Magnitude < (TargetPosition-Position).Magnitude then
+					
+					Target = v.Parent
+					TargetPosition = v.Parent.PrimaryPart.Position
+					
+				end
+				
+			end
+			
+		end
+		
+	end
+	
+	return Target
+	
+end
+
 local function update(input)
 	local delta = input.Position - dragStart
 	gui.Parent.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
@@ -137,7 +177,7 @@ end)
 
 function Outline(BorderWidth:number,BorderRadius:number,BorderColor:BrickColor,Frame:Frame, Name:string)
 	local OutlineFrame = Instance.new("Frame")
-	
+
 	OutlineFrame.Position = Frame.Position
 	OutlineFrame.Size = Frame.Size +UDim2.new(0,BorderWidth,0,BorderWidth)
 	OutlineFrame.Parent = Frame.Parent
@@ -145,18 +185,20 @@ function Outline(BorderWidth:number,BorderRadius:number,BorderColor:BrickColor,F
 	OutlineFrame.AnchorPoint = Frame.AnchorPoint
 	OutlineFrame.Name = Name
 	OutlineFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
-	
+
 	Frame.Parent = OutlineFrame
 	Frame.Position = UDim2.new(0.5,0,0.5,0)
 	Frame.Size = UDim2.new(1,-BorderWidth,1,-BorderWidth)
-	
+
 	Corner(OutlineFrame,UDim.new(BorderRadius,0) )
 	Corner(Frame, UDim.new(BorderRadius,0))
+	
+	return OutlineFrame
 end
 
 function Gradient(Parent:Instance,ColorSeq:ColorSequence, Rotation:number)
 	local Gradient = Instance.new("UIGradient")
-	
+
 	Gradient.Color = ColorSeq
 	Gradient.Parent = Parent
 	Gradient.Rotation = Rotation
@@ -193,15 +235,15 @@ function CreateScrollingFrame(x,y,xsize,ysize, Name)
 end
 
 function CreateTabFrame(x,y,xsize,ysize, Name)
-	
+
 	local Frame = CreateFrame(x,y,xsize,ysize,Name)
 	Frame.Parent = ScreenGui
-	
+
 	Gradient(Frame,ColorSequence.new({
 		ColorSequenceKeypoint.new(0,Color3.new(0.705882, 0, 0)),
 		ColorSequenceKeypoint.new(1,Color3.new(0.384314, 0, 0))
 	}),90)
-	
+
 	local SideBar = CreateScrollingFrame(0,0.5,0.15,1,"SideBar")
 	SideBar.Parent = Frame
 	SideBar.AnchorPoint = Vector2.new(0,0.5)
@@ -210,37 +252,37 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	SideBar.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
 	SideBar.ScrollBarThickness = 5
 	SideBar.BackgroundColor3 = Color3.new(0.333333, 0, 0)
-	
+
 	Corner(SideBar,UDim.new(0.0125,0))
-	
+
 	local ContentFrame = CreateFrame(0.575,0.575,0.85,0.85,"ContentFrame")
 	ContentFrame.Parent = Frame
 	ContentFrame.BackgroundTransparency = 1
 	ContentFrame.BorderSizePixel = 0
-	
-	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0g",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0f",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
 	HubLabel.BackgroundTransparency = 0.9
 	HubLabel.Parent = Frame
-	
+
 	Corner(HubLabel, UDim.new(0.5,0))
-	
+
 	local ActionsButtonsContainer = CreateFrame(0.9,0.065,0.15,0.0804,"ActionsButtonsContainer")
 	ActionsButtonsContainer.Parent = Frame
 	ActionsButtonsContainer.BorderSizePixel = 0
 	ActionsButtonsContainer.BackgroundTransparency = 1
-	
+
 	local ReduceButton = CreateTextButton(0.5,0,1,1,"ReduceButton","-",Color3.new(0.435294, 0.435294, 0.435294),Color3.new(1, 1, 1))
 	ReduceButton.Parent = ActionsButtonsContainer
 	ReduceButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
 	ReduceButton.AnchorPoint = Vector2.new(0,0)
-	
+
 	Corner(ReduceButton,UDim.new(0.25,0))
-	
+
 	local RemoveButton = CreateTextButton(0,0,1,1,"RemoveButton","X",Color3.new(0.541176, 0, 0.00784314),Color3.new(1, 1, 1))
 	RemoveButton.Parent = ActionsButtonsContainer
 	RemoveButton.AnchorPoint = Vector2.new(0,0)
 	RemoveButton.SizeConstraint = Enum.SizeConstraint.RelativeYY
-	
+
 	Corner(RemoveButton,UDim.new(0.25,0))
 
 	return Frame
@@ -282,7 +324,7 @@ function CreateTextLabel(x,y,xsize,ysize,name,text,backgroundColor,textColor)
 	Button.TextScaled = true
 	Button.Font = Enum.Font.FredokaOne
 	Button.FontFace.Bold = true
-	
+
 	return Button
 end
 
@@ -306,6 +348,32 @@ function CloseAllFrameInMenuContent()
 			v.Visible = false
 		end
 	end
+end
+
+
+function CreateTextBox(x,y,xsize,ysize,Name,Text,BackgroundColor,TextColor,Placeholder)
+	
+	local Container = CreateFrame(x,y,xsize,ysize,Name)
+	Container.ClipsDescendants = false
+	
+	local Label = CreateTextLabel(0,0.5,0.5,1,"Label",Text,BackgroundColor,TextColor)
+	Label.AnchorPoint = Vector2.new(0,0.5)
+	Label.Parent = Container
+	Label.BorderSizePixel = 0
+	
+	local TextBox = Instance.new("TextBox")
+	TextBox.Position = UDim2.new(0.5,0,0.5,0)
+	TextBox.Size = UDim2.new(0.5,0,1,0)
+	TextBox.AnchorPoint = Vector2.new(0,0.5)
+	TextBox.Parent = Container
+	TextBox.PlaceholderText = Placeholder
+	TextBox.BorderSizePixel = 0
+	TextBox.TextScaled = true
+	TextBox.Text = ""
+	TextBox.PlaceholderColor3 = Color3.new(0.333333, 0, 0)
+	
+	return Container
+	
 end
 
 local ToolsButton = CreateImageButton(.5,0.1,0.5,0.5,"ToolsButton","rbxassetid://16244450805",Color3.new(0.4, 0, 0.00784314))
@@ -438,9 +506,21 @@ local AimbotButton = CreateTextButton(0.2,.15,.4,0.125,"AimbotButton", "Aimbot",
 AimbotButton.Parent = CombatFrame
 Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AimbotButton,"AimbotButtonOutline")
 
+local AimbotDistanceSettings = CreateTextBox(0.5,0.15,.4,0.125,"AimbotDistanceSettings","Aimbot Distance",Color3.new(1, 0, 0),Color3.new(1, 1, 1),"Number:")
+AimbotDistanceSettings.Parent = CombatFrame
+local AimbotDistanceSettingsOutline = Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AimbotDistanceSettings,"AimbotDistanceSettingsOutline")
+Gradient(AimbotDistanceSettingsOutline,ColorSequence.new({
+	ColorSequenceKeypoint.new(0,Color3.new(1, 0, 0.0156863)),
+	ColorSequenceKeypoint.new(1,Color3.new(0.541176, 0, 0.00784314))
+}), 0)
+
 local AutoStabButton = CreateTextButton(0.2,.3,.4,0.125,"AutoStabButton", "Auto stab",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 AutoStabButton.Parent = CombatFrame
 Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoStabButton,"AutoStabButtonOutline")
+
+local KillAuraButton = CreateTextButton(0.2,.45,.4,0.125,"KillAuraButton", "Kill Aura",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+KillAuraButton.Parent = CombatFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),KillAuraButton,"KillAuraButtonOutline")
 
 
 local BrowserUIList = Instance.new("UIListLayout")
@@ -505,12 +585,12 @@ function Refresh()
 	local ReturnButton = CreateTextButton(0,0,0.9,0.1,"00000000Return","Return",Color3.new(0, 1, 0),Color3.new(1, 1, 1))
 	ReturnButton.Parent = BrowserInnerFrame
 	Corner(ReturnButton,UDim.new(0.125,0))
-	
+
 	local BottomFillers = CreateFrame(0,0,0.9,0.4,"ZZZZZZZZZZZZFiller")
 	BottomFillers.Parent = BrowserInnerFrame
 	BottomFillers.BackgroundTransparency = 1
 	Corner(BottomFillers,UDim.new(0.125,0))
-	
+
 	ReturnButton.MouseButton1Click:Connect(function()
 		if Selection ~= game then 
 			Selection = Selection.Parent
@@ -531,7 +611,7 @@ function Refresh()
 		local Button = CreateTextButton(0,0,0.9,0.1,"A"..v.Name,v.Name.. " => "..v.ClassName,Color3.new(1, 0.607843, 0.615686),Color3.new(0, 0, 0))
 		Button.Parent = BrowserInnerFrame
 		Corner(Button,UDim.new(0.125,0))
-		
+
 		Button.MouseButton1Click:Connect(function()
 			Button.BackgroundColor3 = Color3.new(0.407843, 0, 0.0117647)
 			Selection = v
@@ -743,30 +823,24 @@ AimbotButton.MouseButton1Click:Connect(function()
 	end
 
 	while Aimbot do
-		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
-
-		for i,v in pairs(Parts) do
-			if v == nil or v.Parent == nil then
-				break		
+		
+		local Target = GetClosestTarget(character.PrimaryPart.Position,250)
+		
+		print(Target)
+		
+		if Target ~= nil and Target.Humanoid ~= nil and Target.Humanoid.Health > 0 then
+			
+			if Target:FindFirstChild("Head") ~= nil then
+				
+				workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,Target.Head.Position)
+				
 			end
-			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
-				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
-
-				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Character" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
-					while v.Parent ~= nil and vHumanoid.Health > 0 and Aimbot and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
-						if v.Parent ~= nil and v.Parent:FindFirstChild("Head") ~= nil then
-							workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
-							wait(.0125)
-						end
-
-					end
-				end
-
-			end
-
+			
 		end
-		wait(0.5)
+		wait(.0125)
+		
 	end
+	
 
 end)
 
@@ -787,33 +861,19 @@ AutoStabButton.MouseButton1Click:Connect(function()
 	end
 
 	while AutoStab do
-		local Parts = workspace:GetPartBoundsInRadius(character.PrimaryPart.Position,250)
-
-		for i,v in pairs(Parts) do
-			if v == nil or v.Parent == nil then
-				break		
-			end
-			if v.Parent ~= nil and v.Parent:FindFirstChild("Humanoid") ~= nil then
-				local vHumanoid = v.Parent:FindFirstChild("Humanoid")
-
-				if v.Parent ~= nil and vHumanoid ~= Player.Character.Humanoid and v.Parent.Name ~= "Worker" and v.Parent.Name ~= "Statue" and v.Parent.Name ~= "AISoldier" and v.Parent.Name ~= "Soldier1" and v.Parent.Name ~= "Animated" then
-
-					while v.Parent ~= nil and vHumanoid.Health > 0 and AutoStab and (v.Position-character.PrimaryPart.Position).Magnitude < 151 do
-						if (v.Parent.PrimaryPart.Position-character.PrimaryPart.Position).Magnitude > 4 then
-							GoToPoint(character.PrimaryPart.Position,v.Parent.PrimaryPart.Position + Vector3.new(2,0,2),40,0.1)
-						end
-
-						Knife.Parent = character
-						workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,v.Parent.Head.Position)
-						Knife:Activate()
-						wait(0.33)
-					end
-
-				end
-
-			end
-
+		local Target = GetClosestTarget(character.PrimaryPart.Position,250)
+		
+		if (Target.PrimaryPart.Position-character.PrimaryPart.Position).Magnitude > 4 then
+			GoToPoint(character.PrimaryPart.Position,Target.PrimaryPart.Position + Vector3.new(2,0,2),40,0.1)
 		end
+
+		Knife.Parent = character
+		workspace.CurrentCamera.CFrame = CFrame.lookAt(character.PrimaryPart.Position,Target.Head.Position)
+		Knife:Activate()
+		wait(0.33)
+
+
+
 		wait(0.5)
 	end
 end)
@@ -846,47 +906,8 @@ end)
 
 --Get Remote Event
 
-function LookInFiles(Object:Instance)
-
-
-
-	if #Object:GetChildren() <= 0 then
-		return
-	end	
-
-	for i,v in pairs(Object:GetChildren())do
-		Iterations += 1 
-  		if Iterations >= 50 then
-   			wait(0.1)
-   			Iterations= 0
-  		end
- 
-		if #v:GetChildren() > 0 then
-
-			LookInFiles(v)
-
-		elseif v:isA("RemoteEvent") or v:IsA("RemoteFunction") or v:IsA("BindableEvent") or v:IsA("BindableFunction") or v:IsA("UnreliableRemoteEvent") then
-
-			local P = v.Parent
-			local Str = v.Name
-
-			while P ~= nil do
-				Str = P.Name.. "/"..Str
-				P = P.Parent
-			end
-
-			print(Str)
-
-		end
-
-	end
-
-end
-
 GetRemoteEventsButton.MouseButton1Click:Connect(function()
-Iterations = 0
-	LookInFiles(game)
-	print("End")
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
 end)
 
 -- Misc
