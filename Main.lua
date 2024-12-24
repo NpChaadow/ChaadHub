@@ -645,7 +645,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoons:GetChildren()) do
 			if v.TycoonVals.Owner.Value == Player then
 				PlayerTycoon = v
-				TycoonPos = PlayerTycoon.Essentials.Giver.CollectButton.Position
+				TycoonPos = PlayerTycoon.Models.Giver.CollectButton.Position
 			end
 		end
 	end
@@ -661,7 +661,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 
 		wait(.25)
 
-		for i,v in pairs(PlayerTycoon.Buttons:GetChildren())do
+		for i,v in pairs(PlayerTycoon.ButtonFolder:GetChildren())do
 			wait(0.2)
 			if AutoBuy == false then
 				break
@@ -670,23 +670,19 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 			if CrateFound ~= true and AutoBuy then
 				local Fnd = false
 
-				if PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")	~= nil then
-					v = PlayerTycoon.Buttons:FindFirstChild("Worker_1_Upgrade1")
+				if PlayerTycoon.ButtonFolder:FindFirstChild("Worker_1_Upgrade1") ~= nil then
+					v = PlayerTycoon.ButtonFolder:FindFirstChild("Worker_1_Upgrade1")
 				end
-				if PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")	~= nil then
-					v = PlayerTycoon.Buttons:FindFirstChild("Worker_2_Upgrade1")
+				if PlayerTycoon.ButtonFolder:FindFirstChild("Worker_2_Upgrade1") ~= nil then
+					v = PlayerTycoon.ButtonFolder:FindFirstChild("Worker_2_Upgrade1")
 				end
 
 				if IsPartOfTable(ButtonsBlacklist,v.Name) then
-
-				elseif v.Button.Color.R > v.Button.Color.G then
+					
+				elseif v.Button.Color.R > v.Button.Color.G and v.Button.Color.B < v.Button.Color.R + v.Button.Color.G then
 					Fnd = true
 
-					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
-						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
-					else
-						GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
-					end
+					GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 
 				else
 					Fnd = true
@@ -718,7 +714,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 		for i,v in pairs(PlayerTycoons:GetChildren()) do
 			if v.TycoonVals.Owner.Value == Player then
 				PlayerTycoon = v
-				TycoonPos = PlayerTycoon.Essentials.Giver.CollectButton.Position
+				TycoonPos = PlayerTycoon.Models.Giver.CollectButton.Position
 			end
 		end
 	end
