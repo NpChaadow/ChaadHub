@@ -679,15 +679,16 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 
 				if IsPartOfTable(ButtonsBlacklist,v.Name) then
 					
-				elseif v.Button.Color.R > v.Button.Color.G and v.Button.Color.B < (v.Button.Color.R + v.Button.Color.G)/2 then
-					Fnd = true
-
-					GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
-
-				else
+				elseif v.Button.Color.R < v.Button.Color.G and v.Button.Color.B < ((v.Button.Color.R + v.Button.Color.G)/2) then
+						
 					Fnd = true
 					GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
-
+						
+				else
+						
+					Fnd = true
+					GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
+						
 				end
 
 				if Fnd == false then
