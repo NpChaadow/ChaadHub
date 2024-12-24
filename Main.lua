@@ -691,8 +691,8 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 				end
 
 				if Fnd == false then
-					if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
-						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
+					if PlayerTycoon.Models:FindFirstChild("Giver") ~= nil then
+						GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Models.Giver.CollectButton.Position,30,0.1)	
 					else
 						GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 					end
