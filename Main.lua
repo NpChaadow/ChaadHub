@@ -260,7 +260,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	ContentFrame.BackgroundTransparency = 1
 	ContentFrame.BorderSizePixel = 0
 
-	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.0f",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.1a",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
 	HubLabel.BackgroundTransparency = 0.9
 	HubLabel.Parent = Frame
 
@@ -729,8 +729,8 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	while AutoCollect do
 		wait(0.5)
 		if CrateFound ~= true and AutoCollect then
-			if PlayerTycoon.Essentials:FindFirstChild("Giver") ~= nil then
-				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Essentials.Giver.CollectButton.Position,30,0.1)	
+			if PlayerTycoon.Models:FindFirstChild("Giver") ~= nil then
+				GoToPoint(character.PrimaryPart.Position,PlayerTycoon.Models.Giver.CollectButton.Position,30,0.1)	
 			else
 				GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 			end
