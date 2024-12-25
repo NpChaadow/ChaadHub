@@ -680,6 +680,10 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 					v = PlayerTycoon.ButtonFolder:FindFirstChild("01_Base_Floor_Upgrade")
 				end
 					
+				if PlayerTycoon.ButtonFolder:FindFirstChild("02_Worker_01_Upgrade") ~= nil then
+					v = PlayerTycoon.ButtonFolder:FindFirstChild("02_Worker_01_Upgrade")
+				end
+					
 				if IsPartOfTable(ButtonsBlacklist,v.Name) then
 					
 				elseif v.Button.Color.R < v.Button.Color.G and v.Button.Color.B < ((v.Button.Color.R + v.Button.Color.G)/2) then
