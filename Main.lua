@@ -21,6 +21,8 @@ local UserInputService = game:GetService("UserInputService")
 local ScreenGui = Instance.new('ScreenGui')
 ScreenGui.Parent = Game.CoreGui
 
+Script.Parent = ScreenGui
+
 local ButtonFrameOutline = Instance.new("Frame")
 ButtonFrameOutline.Parent = ScreenGui
 ButtonFrameOutline.Size = UDim2.new(0.125,0,0.125,0)
