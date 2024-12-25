@@ -568,6 +568,12 @@ ButtonFrame.MouseButton1Click:Connect(function()
 	MenuFrame.Parent.Visible = not MenuFrame.Parent.Visible
 end)
 
+
+function refreshPlayer()
+  Player = Game:GetService("Players").LocalPlayer
+  character = Player.Character
+  humanoid = character:WaitForChild("Humanoid")
+end
 -- Button Functions
 
 --GetWorkspace
