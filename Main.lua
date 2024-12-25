@@ -658,6 +658,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 
 	AutoBuy = not AutoBuy
 	if AutoBuy then
+  refreshPlayer()
 		AutoBuyButton.BackgroundColor3 = Color3.new(0, 1, 0)
 	else
 		AutoBuyButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
@@ -668,6 +669,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 		wait(.25)
 
 		for i,v in pairs(PlayerTycoon.ButtonFolder:GetChildren())do
+   refreshPlayer()
 			wait(0.2)
 			if AutoBuy == false then
 				break
@@ -741,6 +743,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	end
 
 	while AutoCollect do
+  refreshPlayer()
 		wait(0.5)
 		if CrateFound ~= true and AutoCollect then
 			if PlayerTycoon.Models:FindFirstChild("Giver") ~= nil then
@@ -784,6 +787,7 @@ AutoRebirthButton.MouseButton1Click:Connect(function()
 			game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("DailyLoginService"):WaitForChild("RF"):WaitForChild("Claim"):InvokeServer()
 
 			Player.PlayerGui:FindFirstChild("BaseUI").Enabled = false
+   refreshPlayer()
 			wait(10)
 		end
 
