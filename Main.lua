@@ -19,7 +19,7 @@ local Mouse = Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 
 local ScreenGui = Instance.new('ScreenGui')
-ScreenGui.Parent = Game.StarterGui
+ScreenGui.Parent = Game.CoreGui
 
 local ButtonFrameOutline = Instance.new("Frame")
 ButtonFrameOutline.Parent = ScreenGui
