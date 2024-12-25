@@ -126,7 +126,7 @@ function fireproximityprompt(Obj, Amount, Skip) if Obj.ClassName == "ProximityPr
 function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldown:Number)
 	local NewDist = Distance
 	local PreviousPos = StartPlot
-	while character.PrimaryPart.Position ~= EndPlot do
+	while character.PrimaryPart.Position ~= EndPlot and character.Humanoid.Health > 0 do
 		local Direction = (character.PrimaryPart.Position - EndPlot).Unit *-1
 
 		if (character.PrimaryPart.Position + Direction*NewDist - EndPlot).Magnitude < NewDist then
