@@ -147,10 +147,6 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 		wait(StepCooldown)
 
 	end
-
-	if character.PrimaryPart.Position ~= EndPlot and character.Humanoid.Health > 0 then
-		GoToPoint(StartPlot,EndPlot,Distance,StepCooldown)
-	end
 end
 
 gui.InputBegan:Connect(function(input)
@@ -727,9 +723,6 @@ function autoBuy()
 
 		end
 	end
-	if AutoBuy then
-		autoBuy()
-	end
 
 end
 
@@ -754,7 +747,7 @@ AutoCollectButton.MouseButton1Click:Connect(function()
 	end
 
 	while AutoCollect do
-  refreshPlayer()
+ 		refreshPlayer()
 		wait(0.5)
 		if CrateFound ~= true and AutoCollect then
 			if PlayerTycoon.Models:FindFirstChild("Giver") ~= nil then
