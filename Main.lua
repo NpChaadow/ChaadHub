@@ -500,6 +500,10 @@ local AutoFarmEventButton = CreateTextButton(0.2,.30,.4,0.125,"AutoFarmEventButt
 AutoFarmEventButton.Parent = WorldFrame
 Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoFarmEventButton,"AutoFarmEventButtonOutline")
 
+local z = CreateTextButton(0.2,.45,.4,0.125,"AutoFarmEventButton", "Teleport To Tower",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+TowerTeleportButton.Parent = WorldFrame
+Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),TowerTeleportButton,"TowerTeleportButtonOutline")
+
 -- Combat Buttons
 
 local AimbotButton = CreateTextButton(0.2,.15,.4,0.125,"AimbotButton", "Aimbot",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
@@ -764,7 +768,7 @@ end)
 -- Auto Rebirth
 
 AutoRebirthButton.MouseButton1Click:Connect(function()
-
+	
 	AutoRebirth = not AutoRebirth
 	if AutoRebirth then
 		AutoRebirthButton.BackgroundColor3 = Color3.new(0, 1, 0)
@@ -778,6 +782,13 @@ AutoRebirthButton.MouseButton1Click:Connect(function()
 		wait(10)
 
 		if Player.PlayerGui:FindFirstChild("BaseUI").Enabled == true then
+			local isAutoEnabled = false
+				
+			if AutoBuy then
+				AutoBuy = false
+				isAutoEnabled = true
+			end
+				
 			game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("TycoonService"):WaitForChild("RF"):WaitForChild("SetBase"):InvokeServer(3)
 
 			game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("TycoonService"):WaitForChild("RF"):WaitForChild("Select"):InvokeServer("France")
@@ -791,8 +802,12 @@ AutoRebirthButton.MouseButton1Click:Connect(function()
 			game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("DailyLoginService"):WaitForChild("RF"):WaitForChild("Claim"):InvokeServer()
 
 			Player.PlayerGui:FindFirstChild("BaseUI").Enabled = false
-   refreshPlayer()
+   			refreshPlayer()
 			wait(10)
+				
+			if IsAutoEnabled then
+				autoBuy()
+			end
 		end
 
 	end
