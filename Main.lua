@@ -147,6 +147,10 @@ function GoToPoint(StartPlot:Vector3,EndPlot:Vector3,Distance:Number,StepCooldow
 		wait(StepCooldown)
 
 	end
+
+	if character.PrimaryPart.Position ~= EndPlot and character.Humanoid.Health > 0 then
+		GoToPoint(StartPlot,EndPlot,Distance,StepCooldown)
+	end
 end
 
 gui.InputBegan:Connect(function(input)
@@ -658,18 +662,22 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 
 	AutoBuy = not AutoBuy
 	if AutoBuy then
-  refreshPlayer()
+  		refreshPlayer()
 		AutoBuyButton.BackgroundColor3 = Color3.new(0, 1, 0)
 	else
 		AutoBuyButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
 
+	autoBuy()
+end)
+
+function autoBuy()
 	while AutoBuy do
 
 		wait(.25)
 
 		for i,v in pairs(PlayerTycoon.ButtonFolder:GetChildren())do
-   refreshPlayer()
+   			refreshPlayer()
 			wait(0.2)
 			if AutoBuy == false then
 				break
@@ -701,7 +709,7 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 						
 				else
 						
-					Fnd = true
+					Fnd = false
 					GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
 						
 				end
@@ -719,8 +727,11 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 
 		end
 	end
+	if AutoBuy then
+		autoBuy()
+	end
 
-end)
+end
 
 --Auto Collect
 
