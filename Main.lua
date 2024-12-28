@@ -500,7 +500,7 @@ local AutoFarmEventButton = CreateTextButton(0.2,.30,.4,0.125,"AutoFarmEventButt
 AutoFarmEventButton.Parent = WorldFrame
 Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),AutoFarmEventButton,"AutoFarmEventButtonOutline")
 
-local z = CreateTextButton(0.2,.45,.4,0.125,"AutoFarmEventButton", "Teleport To Tower",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
+local TowerTeleportButton = CreateTextButton(0.2,.45,.4,0.125,"AutoFarmEventButton", "Teleport To Tower",Color3.new(0.294118, 0, 0.00392157),Color3.new(1, 1, 1))
 TowerTeleportButton.Parent = WorldFrame
 Outline(4,0.125,BrickColor.new(Color3.new(1, 0, 0.0156863)),TowerTeleportButton,"TowerTeleportButtonOutline")
 
