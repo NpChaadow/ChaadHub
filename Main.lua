@@ -260,7 +260,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	ContentFrame.BackgroundTransparency = 1
 	ContentFrame.BorderSizePixel = 0
 
-	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.3i",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.4a",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
 	HubLabel.BackgroundTransparency = 0.9
 	HubLabel.Parent = Frame
 
@@ -700,9 +700,7 @@ function autoBuy()
 					v = PlayerTycoon.ButtonFolder:FindFirstChild("02_Worker_01_Upgrade")
 				end
 					
-				if IsPartOfTable(ButtonsBlacklist,v.Name) then
-					
-				elseif v.Button.Color.R < v.Button.Color.G and v.Button.Color.B < ((v.Button.Color.R + v.Button.Color.G)/2) then
+				elseif v:FindFirstChild("Button") ~= nil and not IsPartOfTable(ButtonsBlacklist,v.Name) and v.Button.Color.R < v.Button.Color.G and v.Button.Color.B < ((v.Button.Color.R + v.Button.Color.G)/2) then
 						
 					Fnd = true
 					GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
