@@ -860,7 +860,7 @@ function TeleportTower()
 	AutoCrate = false
 	AutaCollect = false
 
-	GoToPoint(character.PrimaryPart.Position, Vector3.new(-7.8, 807.5, -433.1),40,0.1)
+	GoToPoint(character.PrimaryPart.Position, Vector3.new(-7.8, 803, -433.1),40,0.1)
 
 	wait(40)
 	AutoBuy = wasAutoBuy
