@@ -727,7 +727,7 @@ function autoBuy()
 
 		end
 	end
-	wait(.25)
+	wait(1)
 	autoBuy()
 end
 
@@ -848,6 +848,28 @@ AutoCrateButton.MouseButton1Click:Connect(function()
 	end
 
 end)
+
+--Teleport To Tower
+
+function TeleportTower()
+	local wasAutoBuyEnabled = AutoBuy
+	local wasAutoCollectEnabled = AutoCollect
+	local wasAutoCrateEnabled = AutoCrate
+
+	AutoBuy = false
+	AutoCrate = false
+	AutaCollect = false
+
+	GoToPoint(character.PrimaryPart.Position, vector3.new(-7.8, 807.5, -433.1))
+
+	wait(40)
+	AutoBuy = wasAutoBuy
+	AutoCollect = wasAutoCollect
+	AutoCrate = wasAutoCrate
+end
+
+TowerTeleportButton.MouseButton1Click:Connect(TeleportTower())
+
 -- Anti Afk
 
 AntiAfkButton.MouseButton1Click:Connect(function()
