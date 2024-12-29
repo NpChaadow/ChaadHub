@@ -868,9 +868,7 @@ function TeleportTower()
 	AutoCrate = wasAutoCrate
 end
 
-TowerTeleportButton.MouseButton1Click:Connect(function()
-	TeleportTower()
-end)
+
 
 -- Anti Afk
 
