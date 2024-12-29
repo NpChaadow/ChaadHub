@@ -667,8 +667,6 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	else
 		AutoBuyButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
-
-	autoBuy()
 end)
 
 function autoBuy()
