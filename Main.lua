@@ -685,7 +685,7 @@ function autoBuy()
 
 			if CrateFound ~= true and AutoBuy then
 				local Fnd = false
-				while character.humanoid.Health <= 0 do
+				while character.Humanoid.Health <= 0 do
 					wait(1)
 				end
 				if PlayerTycoon.ButtonFolder:FindFirstChild("Worker_1_Upgrade1") ~= nil then
