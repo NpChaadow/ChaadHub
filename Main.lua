@@ -260,7 +260,7 @@ function CreateTabFrame(x,y,xsize,ysize, Name)
 	ContentFrame.BackgroundTransparency = 1
 	ContentFrame.BorderSizePixel = 0
 
-	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.4a",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
+	local HubLabel = CreateTextLabel(0.4,0.070,0.5,0.16,"HubNameLabel","Chaad Hub v.0.2.4b",Color3.new(0.458824, 0.458824, 0.458824),Color3.new(1, 1, 1))
 	HubLabel.BackgroundTransparency = 0.9
 	HubLabel.Parent = Frame
 
@@ -667,6 +667,8 @@ AutoBuyButton.MouseButton1Click:Connect(function()
 	else
 		AutoBuyButton.BackgroundColor3 = Color3.new(0.294118, 0, 0.00392157)
 	end
+
+	autoBuy()
 end)
 
 function autoBuy()
@@ -720,7 +722,7 @@ function autoBuy()
 		end
 	end
 	wait(1)
-	autoBuy()
+
 end
 
 --Auto Collect
