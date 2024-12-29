@@ -700,16 +700,12 @@ function autoBuy()
 					v = PlayerTycoon.ButtonFolder:FindFirstChild("02_Worker_01_Upgrade")
 				end
 					
-				elseif v:FindFirstChild("Button") ~= nil and v.Button.Color.R < v.Button.Color.G and v.Button.Color.B < ((v.Button.Color.R + v.Button.Color.G)/2) then
-						
+				if v:FindFirstChild("Button") ~= nil and v.Button.Color.R < v.Button.Color.G and v.Button.Color.B < ((v.Button.Color.R + v.Button.Color.G)/2) then		
 					Fnd = true
-					GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)
-						
-				else
-						
+					GoToPoint(character.PrimaryPart.Position,v.Button.Position,30,0.1)	
+				else	
 					Fnd = false
-					GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)
-						
+					GoToPoint(character.PrimaryPart.Position,TycoonPos,30,0.1)	
 				end
 
 				if Fnd == false then
